@@ -1,0 +1,20 @@
+.profile_pic {
+  width: 100%;
+  height: 200px;
+  background-image: url('https://cdn.huckletree.com/web-uploads/2018/10/23094022/OS-Blog-Header-32.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  filter: blur(0px);
+}
+.profile_info {
+  display: flex;
+  background: #fff;
+  padding: 15px;
+}
+.avatar {
+  padding: 15px;
+}
+.profile_text p{
+  padding: 5px;
+}

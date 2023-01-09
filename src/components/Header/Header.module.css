@@ -1,0 +1,10 @@
+.header {
+  height: 10vh;
+  width: 100%;
+  background: #2196f3;
+}
+.logo img{
+  margin: 3px 0 0 3px;
+  height: 48px;
+  width: 48px;
+}
