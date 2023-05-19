@@ -48,7 +48,7 @@ function WallContainer() {
                     ownerId={ownerId}
                     message={state.textAreaState}
                     postId={item.id}
-                    key={crypto.randomUUID()}
+                    key={i}
                     likes={item.likes}
                     text={item.message}
                     index={i}
