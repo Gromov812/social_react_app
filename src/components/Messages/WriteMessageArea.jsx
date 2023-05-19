@@ -2,17 +2,22 @@ import React from "react";
 import m from './Messages.module.css';
 
 
-const WriteMessageArea = () => {
+const WriteMessageArea = (props) => {
 
-    let textarea = React.createRef();
-
+    let textArea = React.createRef();
+    
+let sendMessage = () => {
+    props.dispatch({type: 'SEND_MESSAGE', conversation_id: props.data.activeDialogId})
+    textArea.current.value = '';
+}
+ 
     return <>
     
     <div className={m.area}>
         
-            <textarea placeholder="Type your message here..." ref={textarea}></textarea>
+            <textarea className={m.textarea} placeholder="Type your message here..." ref={textArea} onChange={(e) => props.dispatch({type: 'GET_MESSAGE_INTO_STATE', text: e.target.value})} ></textarea>
         
-        <button className={m.button} onClick={() => alert(textarea.current.value)}>Send</button>
+        <button className={m.button} onClick={sendMessage}>Send</button>
     </div>
     
     </>

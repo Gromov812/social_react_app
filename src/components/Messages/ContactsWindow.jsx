@@ -1,18 +1,52 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { usersAPI } from "../../DAL/api";
 import Contact from "./Contact";
 import m from './Messages.module.css';
 
-
 const ContactsWindow = (props) => {
+    const dispatch = useDispatch();
+    const ownerId = useSelector(state => state.authReducer.id);
 
+    useEffect(() => {
+    //     axios.post('http://127.0.0.1:3005/messages/post', {
+                  
+    //         from_id: 50, 
+    //         to_id: 39,
+    //         message: `${new Date()}` 
+          
+    // }).then(res => console.log(res))
 
+        usersAPI.getDialogContacts(ownerId)
+        .then(res => { 
+            console.log(res);
+            if (res.data !== 'Empty array') {
+            let arr = [...res.data];
+            arr.map(el => {
+                if (el.contragent_id == ownerId) el.contragent_id = el.from_id;
+                
+                return el;
+            });
+            
+            dispatch({type:'SET_CONTACTS', arr: arr })
+        }
+        })
 
- let contacts = props.data.map(item =><Contact key={crypto.randomUUID()} id={item.id} name={item.name} unread={item.unread} unreadCounter={item.unreadCounter} />);
+    }, [ownerId])
+    let contacts = props.state.contactsData
+        .map(item =>
+            <Contact
+                dispatch={props.dispatch}
+                key={crypto.randomUUID()}
+                id={item.id} 
+                name={item.name}
+                unreadCounter={item.unreadCounter}
+            />
+        );
     return <>
         <div className={m.contacts}>
             <ul className={m.items_list}>
-             {contacts} 
+                {contacts}
             </ul>
         </div>
     </>

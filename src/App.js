@@ -1,29 +1,42 @@
 
-import React from 'react';
+import './App.css';
+import React, { useEffect } from 'react';
 import Header from './components/Header/Header';
 import Nav from './components/Nav/Nav';
-
-import './App.css';
-import Wall from './components/Posts/Wall';
+import WallContainer from './components/Posts/WallContainer';
 import Messages from './components/Messages/Messages';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import store from './redux/redux';
+import { Provider, useSelector } from 'react-redux'
+import Users from './components/Users/UsersContainer';
+import UserProfilePageContainer from './components/Profile/UserProfilePageContainer';
+import RegisterContainer from './components/Header/RegisterContainer';
+import UserFriendsListContainer from './components/Friends/UserFriendsListContainer';
+import ProfileSettingsContainer from './components/ProfileSettings/ProfileSettingsContainer';
 
-function App(props) {
 
-  return <>
+function App() {
+
+return <>
+<Provider store={store}>
     <BrowserRouter>
       <Header />
       <main className="main">
-        <Nav data={props.state.messagesPage.contactsData} />
+        <Nav />
         <div className="content">
-
           <Routes>
-            <Route path="/" element={<Wall data={props.state.wallPage} addPost={props.addPost} updateLikes={props.updateLikes} editPost={props.editPost} />} />
-            <Route path="/messages/*" element={<Messages data={props.state.messagesPage} />} />
+            <Route path="/" element={<WallContainer/>} />
+            <Route path="/messages/*" element={<Messages store={store} />} />
+            <Route path="/users_list/*" element={<Users />} />
+            <Route path="/friends/" element={<UserFriendsListContainer />} />
+            <Route path="/user/:userId" element={<UserProfilePageContainer />} />
+            <Route path="/register" element={<RegisterContainer />} />
+            <Route path="/settings" element={<ProfileSettingsContainer />} />
           </Routes>
         </div>
       </main>
     </BrowserRouter>
+    </Provider>
   </>
 }
 

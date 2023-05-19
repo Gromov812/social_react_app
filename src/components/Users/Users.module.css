@@ -1,0 +1,142 @@
+.container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.user_profile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100px;
+    width: 70%;
+    border: 1px #b4b4b4 solid;
+    border-radius: 5px;
+    margin: 10px 0 ;
+    padding: 0 20px;
+}
+.user_name {
+    font-weight: 600;
+}
+.user_avatar {
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.user_link {
+    margin: 5px 2px;
+    text-decoration: none;
+}
+.right_side {
+    display: flex;
+    flex-direction: column;
+}
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    width: 150px;
+    border: 1px #0673a5 solid;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.remove {
+    background: #0673a5;
+    color: #fff;
+}
+.add {
+    background: #fff;
+    color: #0673a5;
+}
+.send__message {
+    background: #FFF;
+    color: #4a9617;
+    border: 1px #588f338a solid;
+}
+.right_side {
+    margin: 0 30px;
+    text-align: center;
+}
+.left_side {
+    margin: 0 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px 0;
+}
+.user_avatar > img {
+    border-radius: 30px;
+    height: 46px;
+    width: 46px;
+}
+.elem {
+    cursor: pointer;
+    color: #252525;
+}
+.active_elem {
+    font-weight: bold;
+    font-size: 16px;
+}
+.user_search__input {
+    height: 30px;
+    width: 300px;
+    border: none;
+    border-bottom: 1px lightblue solid;
+}
+.user_search__input:focus {
+    outline: none;
+}
+.user__search_block {
+    padding: 20px;
+}
+.user__search_block label {
+    padding: 0 15px;
+}
+.modal__block {
+    height: 100vh;
+    width: 100vw;
+    background: #00000050;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s linear;
+    z-index: -1;
+}
+.modal__block_content {
+    padding: 50px;
+    border-radius: 10px;
+    background: #FFF;
+    height: auto;
+    width: auto;
+}
+.active {
+    opacity: 1;
+    z-index: 1;
+}
+.modal__block_newMessage {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+.modal__block_textarea {
+    height: 100px;
+    width: 350px;
+}
+.modal__block_middle {
+    display: flex;
+    padding: 35px 0 ;
+}
+.modal__block_button {
+    float: right;
+}
+.modal__block_userData {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px 0;
+}

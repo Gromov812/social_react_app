@@ -1,48 +1,93 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import m from './Messages.module.css';
 import Msg from "./Msg";
-import WriteMessageArea from "./WriteMessageArea";
+import ScrollToBottom from 'react-scroll-to-bottom';
+import { sendMessage, setConversationId, typeOnPrimaryMsgTextArea } from "../../redux/message-reducer";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { usersAPI } from "../../DAL/api";
+
+const DialogWindow = ({ state, dispatch }) => {
+
+    let ownerId = useSelector(state => state.authReducer.id);
+    let msgStateLength = useSelector(state => state.messageReducer.contactsMsg.length);
+    let params = useParams();
+
+    const sendMsg = (ownerId, to_id) => {
+        let msg = state.contactsData.filter(el => el.id == to_id)[0].currentMessageText;
+        console.log(msg);
+        if (msg) {
+            axios.post('http://127.0.0.1:3005/messages/post', {
+
+                from_id: ownerId,
+                to_id: to_id,
+                message: msg
+
+            }).then(res => console.log(res))
+            dispatch(sendMessage())
+        }
+    }
 
 
-const DialogWindow = (props) => {
 
-    let messages = props.data.contactsMsg.map(el => el)
-        .sort((a, b) => a.sent - b.sent)
-        // .map(item => {
+    useEffect(() => {
+        if (params['*']) {
 
-        //         let time = new Date(item.sent);
-        //         time = time.toLocaleTimeString();
-        //         item.sent = time.toString();
-        //         return item;
-        //     })
-        .map(el => <Msg key={crypto.randomUUID()} text={el.text} conversation={el.conversation} name={el.name} answer={el.answer} sent={el.sent} />)
+            usersAPI.getDialogMessages(ownerId, params['*']).then(res => {
+                console.log(`dialogs >>> `, res);
+                dispatch({type:'SET_USER_MESSAGES', payload: res.data, ownerId})
+            })
+        }
+        console.log(params['*']);
+        dispatch(setConversationId(params['*']));
+        dispatch({ type: 'SET_TO_NULL_UNREAD_COUNTER', userId: params['*'] })
 
-    // props.data.contactsMsg.map(el => <Msg key={crypto.randomUUID()} text={el.text} from={el.from} name={el.name} answer={el.answer} sent={el.sent} />)
-    // .sort((a,b) => a.props.sent - b.props.sent);
-    // messages.map(item => {
-
-    //     let time = new Date(item.props.sent);
-    //     time = time.toLocaleTimeString();
-    //     item.props.sent = time;
-    // })
-    // messages.map(item => console.log(item.props));
+    }, [params['*'], msgStateLength])
 
 
+    function displayFirstScreen() {
+        if (params['*']) {
+            return <>
+                <textarea placeholder="Type your message here..." onChange={(e) => dispatch(typeOnPrimaryMsgTextArea(e.target.value))} value={state.contactsData[state.currentConversationIndex].currentMessageText} onKeyDown={(e) => (e.key === 'Enter' && e.ctrlKey) ? sendMsg(ownerId, params['*']) : ''} />
+                <button className={m.button} onClick={() => sendMsg(ownerId, params['*'])}>Send</button>
+            </>
+        }
+        else return <>
+            <div>
+                <p>
+                    Выберете диалоговое окно!
+                </p>
+            </div>
+        </>
+    }
 
-    // let mes = [];
-    //     for (let el in props) {
-    //         // console.log(!!props[`${el}`]['contactsMsg'][1]['answer']);
-    //         // mes.push(<Msg key={crypto.randomUUID()} text={props[`${el}`]['contactsMsg']['text']} id={props[`${el}`]['contactsMsg']['id']} name={props[`${el}`]['contactsData']['name']}/>)
-    //     };
+
+    let messages = Object.assign([], state.contactsMsg)
+        .filter((el) => el.conversation == state.activeDialogId)
+        .map(el => {
+            return <Msg
+                key={crypto.randomUUID()}
+                text={el.text}
+                conversation={el.conversation}
+                name={el.name}
+                answer={el.answer}
+                sent={el.sent}
+            />
+        })
+
+
     return <>
+        <div className={m.screen}>
 
-        <div className={m.dialogContainer}>
-            {messages}
-            
-                <WriteMessageArea />
-            
+            <ScrollToBottom className={m.dialogContainer}>
+                {messages}
+            </ScrollToBottom>
+
+            <div className={m.area}>
+                {displayFirstScreen()}
+            </div>
         </div>
-
     </>
 }
 

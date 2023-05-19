@@ -1,64 +1,36 @@
 import React from 'react';
-import { useState } from 'react';
-import ProfileHead from '../Profile-header/Profile-head';
-import Post from './post';
 import pw from './PostsWall.module.css';
 
 
 
-const Wall = (props) => {
+const Wall = ({ state, posts, ownerId, userId, typeTextArea, dispatch, usersAPI }) => {
 
-
-    let [indexEdit, setEditIndex] = useState();
-    let [editStatus, setEditStatus] = useState(false);
-
-    let posts =
-        props.data.userPosts
-            .sort((a, b) => b.sent - a.sent)
-            .map((item, i) => <Post
-                addEditPostToTextarea = {addEditPostToTextarea}
-                setEditIndex = {setEditIndex}
-                setEditStatus = {setEditStatus}
-                key = {crypto.randomUUID()}
-                likes = {item.likes}
-                text = {item.text}
-                index = {i}
-                updateLikes = {props.updateLikes}
-                sent = {item.sent}
-            />)
-
-    let postTextFromArea = React.createRef();
-
-
-    function addEditPostToTextarea(text) {
-        
-        postTextFromArea.current.value = text;
-    }
-
-    function sendPost(value) {
-        if (!editStatus) {
-            value.trim() && props.addPost(value);
-            postTextFromArea.current.value = '';
+function addPost(from, to, message) {
+    if (message.trim()) {
+        if (!state.editData.status) {
+            dispatch({ type: 'ADD_POST' })
+            usersAPI.sendUserWallPost(from, to, message).then(res => {
+            })
         }
         else {
-            value.trim() && props.editPost(indexEdit, postTextFromArea.current.value);
-            postTextFromArea.current.value = '';
-            setEditStatus(false);
+            dispatch({ type: 'ADD_POST' })
+            usersAPI.updatepost({ type: 'editPost', postId: state.editData.postId, message: state.textAreaState }).then(res => console.log(res))
         }
     }
-    return <>
-        <ProfileHead />
+}
+       return <>
         <div className={pw.postswall}>
             <div className={pw.add_new_post}>
-                <textarea ref={postTextFromArea} cols="80" rows="1" placeholder='New post about..' onKeyDown={(e) => (e.key === 'Enter' && e.ctrlKey) ? sendPost(postTextFromArea.current.value) : ''} tabIndex="13" ></textarea>
-                <button onClick={() => sendPost(postTextFromArea.current.value)} className={pw.button}>Post it!</button>
+                <textarea cols="80" rows="1" placeholder='New post about..'
+                    onChange={typeTextArea}
+                    onKeyDown={(e) => (e.key === 'Enter' && e.ctrlKey) ? addPost(ownerId, userId || ownerId, state.textAreaState) : ''} value={state.textAreaState} tabIndex="13" ></textarea>
+                <button onClick={() => {addPost(ownerId, userId || ownerId, state.textAreaState)}} className={pw.button}>Post it!</button>
             </div>
         </div>
 
         <div className={pw.posts}>
             {posts}
         </div>
-
     </>
 }
 

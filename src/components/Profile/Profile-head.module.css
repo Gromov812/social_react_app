@@ -1,0 +1,111 @@
+.profile__pic {
+  position: relative;
+}
+.profile__pic > img {
+  object-fit: cover;
+  width: 100%;
+  height: 200px;
+  
+}
+.profile__pic_changer {
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+  width: 36px;
+  border-radius: 5px;
+  background: #ffffffc7;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+  display: none;
+  z-index: 2;
+}
+.profile__pic_changer_pic {
+  margin: 4px;
+  height: 26px;
+  width: 26px;
+}
+.profile__pic:hover > .profile__pic_changer {
+  display: block;
+}
+.profile_info {
+  display: flex;
+  background: #fff;
+  padding: 15px;
+}
+.avatar {
+  display: flex;
+  flex-direction: column;
+  gap: 15px 0;
+  padding: 15px;
+  position: relative;
+}
+.avatar > img {
+  height: 180px;
+  width: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.profile_text p{
+  padding: 5px;
+}
+.profile_text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.status {
+  border: none;
+  width: 100%;
+}
+.status:focus {
+  outline: none;
+  border-bottom: 2px lightblue solid;
+}
+.upload_photo {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 30px;
+  width: 100%;
+  text-align: center;
+  background: #2929299a;
+  color: #fff;
+  font-weight: 700;
+  display: none;
+}
+.avatar:hover > .upload_photo {
+  display: block;
+  cursor: pointer;
+}
+.hidden {
+  display: none;
+}
+.green {
+  display: block;
+  background: rgb(125, 192, 24);
+}
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
+  width: 150px;
+  border: 1px #0673a5 solid;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.remove_friend{
+  background: #fff;
+  color: #0673a5;
+}
+.add_friend {
+  background: #0673a5;
+  color: #fff;
+}
+.send_message {
+  background: #FFF;
+  color: #4a9617;
+  border: 1px #588f338a solid;
+}

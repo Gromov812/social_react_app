@@ -1,22 +1,21 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { usersAPI } from "../../DAL/api";
+import { deletePost, editPost } from "../../redux/wall-reducer";
 import LikeCounter from "./LikeCounter";
 import pw from './PostsWall.module.css';
-import { deletePost } from '../../state';
 
 
 
 
 const Post = (props) => {
-
-
     let deleteFunc = () => {
-        deletePost(props.index);
+        usersAPI.updatepost({postId: props.postId, type: 'deletePost'}).then(res => console.log(res))
+        props.dispatch(deletePost(props.index));
     }
 
-    function setEditPostProps () {
-        props.setEditIndex(props.index)
-        props.addEditPostToTextarea(props.text);
-        props.setEditStatus(true)
+    function onEdit () {
+        props.dispatch(editPost(props.index, props.postId))
     } 
 
 
@@ -26,11 +25,25 @@ const Post = (props) => {
 
     return <>
         <div className={pw.post}>
-            <i className={pw.edit} onClick={setEditPostProps}></i>
-            <i className={pw.delete} onClick={deleteFunc}></i>
-            <p className={pw.name}>Alex Alexov <span>{dateDay} at {dateTime}</span></p>
+        {props.homeLander ? 
+        props.fromId == props.ownerId ?  <>
+        <i className={pw.edit} onClick={onEdit}></i>
+        <i className={pw.delete} onClick={deleteFunc}></i>
+        </>
+        :
+        <i className={pw.delete} onClick={deleteFunc}></i>
+        :
+        props.fromId == props.ownerId ?
+        <>
+        <i className={pw.edit} onClick={onEdit}></i>
+        <i className={pw.delete} onClick={deleteFunc}></i>
+        </>
+        :
+        ''
+        }
+            <p className={pw.name}><Link className={pw.user_link} to={`/user/${props.fromId}`}>{props.fromName}</Link><span>{dateDay} at {dateTime}</span></p>
             <pre>{props.text}</pre>
-            <LikeCounter likes={props.likes} index={props.index} updateLikes={props.updateLikes} userId={props.id} />
+            <LikeCounter dispatch = {props.dispatch} likes={props.likes} index={props.index} postId={props.postId} ownerId={props.ownerId} />
         </div>
 
     </>

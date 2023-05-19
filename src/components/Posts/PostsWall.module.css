@@ -20,6 +20,7 @@
         padding: 8px 0 8px 10px;
         resize: none;
         transition: 0.2s linear;
+        outline: none;
     }
     .add_new_post textarea:focus {
         height: 80%;
@@ -98,4 +99,32 @@
         word-wrap: break-word;    
         padding: 15px;
         line-height: 20px;
+    }
+    .user_link {
+        text-decoration: none;
+        padding: 0 5px;
+        color: #303030;
+    }
+    .user_link:hover {
+        color: #8a8a8a;
+    }
+
+    .not__autorized_block {
+        margin: 100px 0 0 0;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        font-weight: 700;
+        font-size: 35px;
+        justify-content: center;
+        align-items: center;
+        
+    }
+
+    .image {
+        max-width: 500px;
+        max-height: 750px;
+        width: auto;
+        height: 100%;
     }

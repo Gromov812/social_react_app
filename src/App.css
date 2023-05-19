@@ -10,12 +10,16 @@ html {
 body {
   max-width: 1440px;
   margin: 0 auto;
+  font-family: monospace;
 }
 
 .main {
 display: flex;
+justify-content: center;
+height: 100%;
 }
 .content {
+  position: relative;
   display: flex;
   flex-flow: column nowrap;
   height: 100%;
