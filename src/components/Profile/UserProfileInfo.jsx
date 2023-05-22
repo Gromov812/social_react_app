@@ -63,7 +63,8 @@ const UserProfileInfo = () => {
 
   return <>
     <div className={ph.profile__pic}>
-      {loaderProfPic &&
+
+    {loaderProfPic &&
         <div className={ph.loading_pic}>
           <img src={loadingCircle} className={ph.pic_loader} />
         </div>

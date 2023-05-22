@@ -13,7 +13,7 @@ import ModalNewMessage from './ModalNewMessage';
 function UsersContainer() {
     const [subscribe, setSubscribe] = useState(false);
     const [isFetching, setFetching] = useState(true);
-    const [userSearchValue, serUserSearchValue] = useState('');
+    const [userSearchValue, setUserSearchValue] = useState('');
     const [isModalActive, setModalActive] = useState(false);
     const [modalData, setModalData] = useState({})
 
@@ -34,9 +34,9 @@ function UsersContainer() {
     }, [isAuthorized])
 
 
-    function sendMessageModalHandler (id, name, photo) {
+    function sendMessageModalHandler(id, name, photo) {
         setModalActive(true);
-        setModalData(data => data = {id, name, photo})
+        setModalData(data => data = { id, name, photo })
         console.log(modalData);
     }
 
@@ -77,8 +77,8 @@ function UsersContainer() {
         }
     }
 
-    let pages = generatePagination(state.currentUsersPage, state.totalPages).map(el => {
-        return <> <span key={crypto.randomUUID()} onClick={() => setPagination(el)} className={`${u.elem} ${el == state.currentUsersPage ? u.active_elem : ''}`}>{el}</span></>
+    let pages = generatePagination(state.currentUsersPage, state.totalPages).map((el, i) => {
+        return <> <span key={i} onClick={() => setPagination(el)} className={`${u.elem} ${el == state.currentUsersPage ? u.active_elem : ''}`}>{el}</span></>
     })
 
 
@@ -97,19 +97,22 @@ function UsersContainer() {
 
 
     function searchUserInputHandler(e) {
-        serUserSearchValue(e.target.value)
-        usersAPI.getFilteredUsers(e.target.value).then(res => {
-            dispatch({ type: 'SET_USERS', users: res.data.users, totalUsersCount: res.data.totalUsers, page: 1 })
-        });
+
+        setUserSearchValue(e.target.value)
+
+            usersAPI.getFilteredUsers(e.target.value).then(res => {
+                dispatch({ type: 'SET_USERS', users: res.data.users, totalUsersCount: res.data.totalUsers, page: 1 })
+            });
+        
     }
 
     // console.log(`RERENDER?`);
     let users = state.users
-        .map((el) => {
+        .map((el, i) => {
             // console.log(state.userFriendlist);
             let followed = state.userFriendlist ? state.userFriendlist.map(el => el.id).includes(el.id) : false;
             return <>
-                <UserProfileBlock key={crypto.randomUUID()} setActive={sendMessageModalHandler} subscribe={subscribe} setSubscribe={setSubscribe} follow={followed} unfollowUser={unfollowUser} followUser={followUser} photo={el.photo} userId={id} name={el.name} id={el.id} dispatch={dispatch} />
+                <UserProfileBlock key={i} setActive={sendMessageModalHandler} subscribe={subscribe} setSubscribe={setSubscribe} follow={followed} unfollowUser={unfollowUser} followUser={followUser} photo={el.photo} userId={id} name={el.name} id={el.id} dispatch={dispatch} />
             </>
 
         })
@@ -117,8 +120,8 @@ function UsersContainer() {
     return <div>
         <h1>USERS LIST</h1>
 
-        
-            <ModalNewMessage isActive={isModalActive} modalData={modalData} setModalActive={setModalActive} />
+
+        <ModalNewMessage isActive={isModalActive} modalData={modalData} setModalActive={setModalActive} />
 
         {isAuthorized ?
             isFetching ? <Preloader /> : <Users userSearchValue={userSearchValue} searchUserInputHandler={searchUserInputHandler} users={users} loadMoreUsers={loadMoreUsers} pages={pages} />

@@ -1,24 +1,18 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { usersAPI } from '../../DAL/api';
 import Register from './Register';
+import { useDispatch } from 'react-redux';
+
+import Cookies from 'universal-cookie';
 
 function RegisterContainer() {
-    const [isSuccsessRegistration, setIsSuccsessRegistration] = useState(false);
-    const [isSuccsessLogin, setIsSuccsessLogin] = useState(false);
+
+    const cookies = new Cookies();
+    let dispatch = useDispatch();
 
     const n = useNavigate();
-
-    useEffect(() => {
-        if (isSuccsessLogin) {
-            console.log('!!!!!');
-            setTimeout(() => {
-                console.log('22222');
-                n('/', { replace: true });
-            }, 1000)
-        }
-    }, [isSuccsessLogin])
 
     function registerUser(login, pass, email) {
 
@@ -31,10 +25,14 @@ function RegisterContainer() {
                 if (res.status == 201) {
                     setIsSuccsessRegistration(true);
                     usersAPI.authorizedMe(login, pass).then((res) => {
-                        console.log(res);
+                        cookies.set('cookie localhost', res.data.token, {})
+                        dispatch({ type: 'SET_USER_INFO_AFTER_LOGIN', userData: res.data.userInfo, id: res.data.userInfo.id })
+                        dispatch({ type: 'SET_AUTHORIZED', authorized: true, errorMessage: null })
                         if (res.status == 200) {
                             setIsSuccsessLogin(true);
+                            n('/settings', { replace: true });
                         }
+                        console.log(res);
                     })
 
                 }
@@ -43,12 +41,7 @@ function RegisterContainer() {
     }
     return (
         <>
-            {
-                isSuccsessRegistration ?
-                    <div>Thanks for registration!</div>
-                    :
                     <Register registerUser={registerUser} />
-            }
         </>
     )
 }

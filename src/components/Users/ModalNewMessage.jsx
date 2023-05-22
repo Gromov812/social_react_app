@@ -26,7 +26,7 @@ export default function ModalNewMessage({ modalData, setModalActive, isActive })
     const sendMsg = (ownerId, to_id) => {
 
         if (textareaInput) {
-            axios.post('http://127.0.0.1:3005/messages/post', {
+            axios.post('http://193.168.46.22:3005/messages/post', {
 
                 from_id: ownerId,
                 to_id: to_id,

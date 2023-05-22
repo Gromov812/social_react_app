@@ -7,6 +7,7 @@ import { usersAPI } from '../../DAL/api';
 import w from './PostsWall.module.css';
 import authorizedSamPicture from '../../assets/img/authorized_Sam.jpg'
 import { typeOnWallTextArea, getUserPostsThunkCreator} from '../../redux/wall-reducer';
+import { Link } from 'react-router-dom';
 
 
 function WallContainer() {
@@ -38,7 +39,7 @@ function WallContainer() {
                     ownerId={ownerId}
                     message={state.textAreaState}
                     postId={item.id}
-                    key={crypto.randomUUID()}
+                    key={i}
                     likes={item.likes}
                     text={item.message}
                     index={i}
@@ -62,7 +63,9 @@ function WallContainer() {
                     <img className={w.image} src={authorizedSamPicture} alt="Unauthorezid Sam" />
                     <p>You are not authorized.</p>
                     <p className={w.small_text}>Use Login: Toby14 Pass: password123 </p>
-                    <p className={w.small_text}>or register new account</p>
+
+                    <p className={w.small_text}>or <Link to="/register">register</Link> new account</p>
+
                 </div>
             }
         </>

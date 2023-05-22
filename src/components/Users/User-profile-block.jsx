@@ -9,7 +9,7 @@ const [upd, setUpd] = useState(follow)
 
 const setId = (id) => dispatch({type:'SET_CURRENT_PROFILE_PAGE_USER_ID', id});
 
-    return <div key={crypto.randomUUID()} className={u.user_profile}>
+    return <div key={id} className={u.user_profile}>
   
 
                 <div className={u.right_side}>

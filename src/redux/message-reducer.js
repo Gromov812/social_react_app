@@ -74,7 +74,8 @@ export const messageReducer = (state = _messageState, action) => {
         case SET_CONVERSATION_ID : {
 
      
-        let getIndex = global.structuredClone(state.contactsData);
+        // let getIndex = global.structuredClone(state.contactsData);
+        let getIndex = state.contactsData.slice();
         getIndex = getIndex.findIndex(el => el.id == action.id);
 
         if (getIndex == -1) getIndex = 0
@@ -99,7 +100,7 @@ export const messageReducer = (state = _messageState, action) => {
     }
 
         case SET_TO_NULL_UNREAD_COUNTER: {
-            let contactsDataCopy = global.structuredClone(state.contactsData)
+            let contactsDataCopy = state.contactsData.slice();
             contactsDataCopy = contactsDataCopy.map(el => {
                 if (el.id == action.userId) el.unreadCounter = 0;
                 return el;

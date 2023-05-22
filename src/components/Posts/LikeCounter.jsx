@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import pw from './PostsWall.module.css';
-import { useState } from "react";
 import { usersAPI } from "../../DAL/api";
 
 
 
 const LikeCounter = (props) => {
-
+    let [isLiked , setIsLiked] = useState();
     let likes = props.likes.length;
 
-    let [isLiked , setIsLiked] = useState(props.likes.includes(props.ownerId));
-
+    useEffect(() => {
+        setIsLiked (props.likes.includes(props.ownerId))
+    }, [likes])
 
 
     function likeIt () {
