@@ -18,13 +18,7 @@ const DialogWindow = ({ state, dispatch }) => {
         let msg = state.contactsData.filter(el => el.id == to_id)[0].currentMessageText;
         console.log(msg);
         if (msg) {
-            axios.post('http://127.0.0.1:3005/messages/post', {
-
-                from_id: ownerId,
-                to_id: to_id,
-                message: msg
-
-            }).then(res => console.log(res))
+            usersAPI.sendMsg(ownerId, to_id, msg).then(res => console.log(res))
             dispatch(sendMessage())
         }
     }
@@ -64,10 +58,10 @@ const DialogWindow = ({ state, dispatch }) => {
 
 
     let messages = Object.assign([], state.contactsMsg)
-        .filter((el) => el.conversation == state.activeDialogId)
-        .map(el => {
+        .filter(el => el.conversation == state.activeDialogId)
+        .map((el,i) => {
             return <Msg
-                key={crypto.randomUUID()}
+                key={i}
                 text={el.text}
                 conversation={el.conversation}
                 name={el.name}

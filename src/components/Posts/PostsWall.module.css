@@ -128,3 +128,7 @@
         width: auto;
         height: 100%;
     }
+	    .small_text {
+        padding: 15px 0;
+        font-size: 1.2rem;
+    }

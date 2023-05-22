@@ -12,7 +12,7 @@ const Contact = (props) => {
     return <>
 
         <NavLink
-            key={crypto.randomUUID()}
+            key={id}
             to={`/messages/${id}`}
             className={setClass}>
             {name}

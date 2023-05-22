@@ -34,10 +34,10 @@ const ContactsWindow = (props) => {
 
     }, [ownerId])
     let contacts = props.state.contactsData
-        .map(item =>
+        .map((item,i) =>
             <Contact
                 dispatch={props.dispatch}
-                key={crypto.randomUUID()}
+                key={i}
                 id={item.id} 
                 name={item.name}
                 unreadCounter={item.unreadCounter}

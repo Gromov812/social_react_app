@@ -77,8 +77,8 @@ export const wallReducer = (state = _wallState, action) => {
         }
         case 'ADD_POST': {
 
-            let newPost = { 'id': crypto.randomUUID(), ' message': state.textAreaState, likes: [], sent: new Date().getTime()}
-            let addPostUpdateData = global.structuredClone(state.userPosts);
+            let newPost = { 'id': Math.random().toString(36).slice(2), ' message': state.textAreaState, likes: [], sent: new Date().getTime()}
+            let addPostUpdateData = state.userPosts.slice();
             let addPostUpdateEditStatus = {...state.editData}
 
 
@@ -105,7 +105,7 @@ export const wallReducer = (state = _wallState, action) => {
 
         case EDIT_POST: {
          
-            let postsClone = global.structuredClone(state.userPosts);
+            let postsClone = state.userPosts.slice();
             let postMessageToEdit = postsClone[action.index].message;
 
             let editPostUpdateData = {...state.editData}
@@ -124,7 +124,7 @@ export const wallReducer = (state = _wallState, action) => {
         
         case UPDATE_LIKES: {
 
-            let postsClone = global.structuredClone(state.userPosts);
+            let postsClone = state.userPosts.slice();
             let postLikes = [...postsClone[action.index].likes]
             let id = action.id;
 
@@ -143,7 +143,7 @@ export const wallReducer = (state = _wallState, action) => {
         }
          
         case DELETE_POST: {
-            let deletePostUpdateData = global.structuredClone(state.userPosts);
+            let deletePostUpdateData = state.userPosts.slice();
             deletePostUpdateData.splice(action.index, 1);
             return {...state,
                 userPosts: deletePostUpdateData

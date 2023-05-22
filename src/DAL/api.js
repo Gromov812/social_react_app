@@ -24,6 +24,16 @@ export const usersAPI = {
             headers
         })
     },
+    sendMsg : (ownerId, to_id, msg) => {
+        console.log(ownerId, to_id, msg);
+        return axios.post('http://193.168.46.22:3005/messages/post', {
+
+                from_id: ownerId,
+                to_id: to_id,
+                message: msg
+
+            })
+    },
     updateUsersStatus: (token, id, statusText) => {
         const headers = {
             'Content-Type': 'application/json',
