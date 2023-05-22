@@ -28,7 +28,7 @@ const Nav = () => {
       <NavLink to="/users_list" className = {setActive}>Users</NavLink> 
       <NavLink to="/friends" className = {setActive}>Friends</NavLink> 
 
-      <NavLink to="/music" className = {setActive}>Music</NavLink>
+      {/* <NavLink to="/music" className = {setActive}>Music</NavLink> */}
       <NavLink to="/settings" className = {setActive}>Settings</NavLink>
       </>
       : ''}

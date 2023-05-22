@@ -12,7 +12,7 @@ function RegisterContainer() {
     const cookies = new Cookies();
     let dispatch = useDispatch();
 
-    const n = useNavigate();
+    const navigate = useNavigate();
 
     function registerUser(login, pass, email) {
 
@@ -23,14 +23,12 @@ function RegisterContainer() {
         })
             .then(res => {
                 if (res.status == 201) {
-                    setIsSuccsessRegistration(true);
                     usersAPI.authorizedMe(login, pass).then((res) => {
                         cookies.set('cookie localhost', res.data.token, {})
                         dispatch({ type: 'SET_USER_INFO_AFTER_LOGIN', userData: res.data.userInfo, id: res.data.userInfo.id })
                         dispatch({ type: 'SET_AUTHORIZED', authorized: true, errorMessage: null })
                         if (res.status == 200) {
-                            setIsSuccsessLogin(true);
-                            n('/settings', { replace: true });
+                            navigate('/settings', { replace: true });
                         }
                         console.log(res);
                     })

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Users from './Users'
 import u from './Users.module.css';
@@ -9,6 +9,7 @@ import Cookies from 'universal-cookie';
 import { generatePagination } from './generatePagination';
 import { getUserListThunkCreator } from '../../redux/users-reducer';
 import ModalNewMessage from './ModalNewMessage';
+import { useNavigate } from 'react-router-dom';
 
 function UsersContainer() {
     const [subscribe, setSubscribe] = useState(false);
@@ -22,15 +23,17 @@ function UsersContainer() {
     let id = useSelector(state => state.authReducer.id);
     let isAuthorized = useSelector(state => state.authReducer.authorized);
     const cookie = new Cookies();
-    const token = cookie.get('cookie localhost')
+    const token = cookie.get('cookie localhost');
+    const navigate = useNavigate();
 
-    useEffect(() => {
 
+    useLayoutEffect(() => {
 
-        if (isAuthorized || !id) {
+        if (isAuthorized) {
             dispatch(getUserListThunkCreator(token, id))
             setFetching(false)
         }
+        else navigate('/', {replace: true});
     }, [isAuthorized])
 
 

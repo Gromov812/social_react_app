@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useLayoutEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import UserProfileBlock from '../Users/User-profile-block';
 import Cookies from 'universal-cookie';
@@ -7,11 +7,12 @@ import { usersAPI } from '../../DAL/api';
 import Users from '../Users/Users';
 import { getUserListThunkCreator } from '../../redux/users-reducer';
 import ModalNewMessage from '../Users/ModalNewMessage';
+import { useNavigate } from 'react-router-dom';
 
 function UserFriendsListContainer(props) {
 
     let cookies = new Cookies();
-    let authorized = useSelector(state => state.authReducer.authorized);
+    let isAuthorized = useSelector(state => state.authReducer.authorized);
     let id = useSelector(state => state.authReducer.id);
     let state = useSelector(state => state.usersReducer);
     let dispatch = useDispatch();
@@ -21,14 +22,16 @@ function UserFriendsListContainer(props) {
     const [isModalActive, setModalActive] = useState(false);
     const [modalData, setModalData] = useState({})
 
+    const navigate = useNavigate();
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         console.log(`rerender`);
-        if (!isExpired(token) || !id) {
+        if (!isExpired(token)) {
             id = decodeToken(token).id;
         }
-        dispatch(getUserListThunkCreator(token, id))
-    }, [authorized, upd])
+        dispatch(getUserListThunkCreator(token, id));
+        if (!isAuthorized) navigate('/', {replace: true})
+    }, [isAuthorized, upd])
 
 
     function sendMessageModalHandler (id, name, photo) {

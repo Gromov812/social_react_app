@@ -1,6 +1,6 @@
-import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { usersAPI } from '../../DAL/api';
 import ProfileSettings from './ProfileSettings';
@@ -10,13 +10,21 @@ export default function ProfileSettingsContainer(props) {
 
     const dispatch = useDispatch();
     const ownerId = useSelector(state => state.authReducer.id);
+    const isAuthorized = useSelector(state => state.authReducer.authorized);
 
     const userData = useSelector(state => state.authReducer.userData);
     const cookie = new Cookies();
     const token = cookie.get('cookie localhost');
+    const navigate = useNavigate();
+
+    const [success, setSuccess] = useState('');
 
 
-    let [success, setSuccess] = useState('');
+    useEffect(() => {
+        if (!isAuthorized) {
+            navigate('/', {replace: true});
+        }
+    }, [isAuthorized]);
 
     function onSubmitSettings(e) {
         e.preventDefault();
