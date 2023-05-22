@@ -6,9 +6,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { usersAPI } from '../../DAL/api';
 import w from './PostsWall.module.css';
 import authorizedSamPicture from '../../assets/img/authorized_Sam.jpg'
-import { typeOnWallTextArea } from '../../redux/wall-reducer';
-import { getUserPostsThunkCreator } from '../../redux/wall-reducer';
-import axios from 'axios';
+import { typeOnWallTextArea, getUserPostsThunkCreator} from '../../redux/wall-reducer';
+
 
 function WallContainer() {
 
@@ -20,15 +19,6 @@ function WallContainer() {
 
 
     useEffect(() => {
-
-
-        // axios.get(`http://127.0.0.1:3005/getMessages?from_id=${41}&to_id=${42}`)
-        // .then(res => console.log(res))
-            // axios.get(`http://127.0.0.1:3005/get`)
-
-
-
-
         if (isAuthorized) {
         dispatch(getUserPostsThunkCreator(ownerId));
         }
@@ -71,6 +61,8 @@ function WallContainer() {
                 <div className={w.not__autorized_block}>
                     <img className={w.image} src={authorizedSamPicture} alt="Unauthorezid Sam" />
                     <p>You are not authorized.</p>
+                    <p className={w.small_text}>Use Login: Toby14 Pass: password123 </p>
+                    <p className={w.small_text}>or register new account</p>
                 </div>
             }
         </>

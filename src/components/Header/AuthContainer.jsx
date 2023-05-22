@@ -5,7 +5,6 @@ import Logout from './Logout';
 import { usersAPI } from '../../DAL/api';
 import Cookies from 'universal-cookie';
 import { isExpired, decodeToken } from "react-jwt";
-import redirect from 'react-router-dom';
 
 function AuthContainer() {
 
@@ -47,7 +46,6 @@ function AuthContainer() {
                     cookies.set('cookie localhost', res.data.token, {})
                     dispatch({ type: 'SET_USER_INFO_AFTER_LOGIN', userData: res.data.userInfo, id: res.data.userInfo.id })
                     dispatch({ type: 'SET_AUTHORIZED', authorized: true, errorMessage: null })
-
                 }
             })
             .catch(err => {

@@ -109,3 +109,19 @@
   color: #4a9617;
   border: 1px #588f338a solid;
 }
+.loading_pic {
+display: flex;
+justify-content: center;
+align-items: center;
+position: absolute;
+height: 90%;
+width: 90%;
+right: 0;
+bottom: 0;
+transform: translate(-5%,-5%);
+background: #00000091;
+}
+.pic_loader {
+  display: block;
+  max-width: 100%;
+}

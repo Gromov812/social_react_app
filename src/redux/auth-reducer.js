@@ -119,20 +119,23 @@ export const authReducer = (state = _authState, action) => {
     }
 }
 
-export const fetchAndDispatchProfilePicThunkCreator = (formData) => {
+export const fetchAndDispatchProfilePicThunkCreator = (formData, setLoaderProfPic) => {
     
     return dispatch => {
         console.log(`fetchAndDispatchProfilePicThunkCreator`);
         usersAPI.fetchProfilePic(formData).then(res => {
             dispatch({ type: 'USER_PROFILE_PIC_HANDLER', profilePic: res.data.filePath });
+            setLoaderProfPic(false);
         });
     }
 }
-export const fetchAndDispatchAvatarThunkCreator = (formData) => {
+export const fetchAndDispatchAvatarThunkCreator = (formData, setLoaderAvatar) => {
     return dispatch => {
         usersAPI.fetchAvatar(formData).then(res => {
             dispatch({ type: 'USER_PHOTO_SETTINGS_HANDLER', photo: res.data.filePath });
-        });
+            setLoaderAvatar(false);
+        })
+        
     }
 }
 
