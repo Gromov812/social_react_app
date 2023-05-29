@@ -128,3 +128,9 @@
     transition: 0.2s linear;
     outline: none;
 }
+
+@media (max-width: 768px) {
+  .container {
+    flex-flow: column wrap;
+  }
+}

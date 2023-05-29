@@ -125,3 +125,9 @@ background: #00000091;
   display: block;
   max-width: 100%;
 }
+
+@media (max-width: 768px) {
+  .profile__pic {
+    display: none;
+  }
+}

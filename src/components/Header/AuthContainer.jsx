@@ -4,7 +4,8 @@ import Auth from './Login';
 import Logout from './Logout';
 import { usersAPI } from '../../DAL/api';
 import Cookies from 'universal-cookie';
-import { isExpired, decodeToken } from "react-jwt";
+import { isExpired, decodeToken, reEvaluateToken  } from "react-jwt";
+import axios from 'axios';
 
 function AuthContainer() {
 
@@ -17,7 +18,8 @@ function AuthContainer() {
     let dispatch = useDispatch();
     let isAuthorized = useSelector(state => state.authReducer.authorized);
     let token = cookies.get('cookie localhost');
-
+    let ownerId = useSelector(state => state.authReducer.id); 
+ 
 
     useEffect(() => {
         if (!isExpired(token)) {
@@ -27,6 +29,14 @@ function AuthContainer() {
                     dispatch({ type: 'SET_USER_INFO_AFTER_LOGIN', userData: res.data.userInfo, id: id })
                     dispatch({ type: 'SET_AUTHORIZED', authorized: true })
                 })
+                axios.post('http://193.168.46.22:3005/auth/refresh_token', {id: ownerId}, {
+                    'Content-Type': 'application/json',
+                    'Authorization': token,
+                }).then(res => {
+                    console.log(`refresh >>`, res)
+                })
+
+                // cookies.set('cookie localhost', token);
         }
         else {
             cookies.remove('cookie localhost')
