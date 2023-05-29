@@ -105,11 +105,12 @@ export function usersReducer(state = _usersState, action) {
         }
 
         case 'LOAD_MORE_USERS': {
-            let currentUsersPageCopy = state.currentProfilePageUserInfo;
+            
+            let currentUsersPageCopy = state.currentUsersPage;
             currentUsersPageCopy += 1;
             return {
                 ...state,
-                currentProfilePageUserInfo: currentUsersPageCopy,
+                currentUsersPage: currentUsersPageCopy,
                 users: [...state.users, ...action.users]
             }
         }

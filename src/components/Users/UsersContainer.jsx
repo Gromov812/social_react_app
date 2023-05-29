@@ -45,8 +45,10 @@ function UsersContainer() {
 
 
     function loadMoreUsers() {
-        setFetching(true)
-        usersAPI.getUsers(token, state.currentUsersPage + 1, state.usersPerList).then(res => {
+        console.log(token, state.currentUsersPage + 1, state.usersPerList, id);
+        setFetching(true);
+        usersAPI.getUsers(token, state.currentUsersPage + 1, state.usersPerList, id).then(res => {
+            // console.log(res);
             dispatch({
                 type: 'LOAD_MORE_USERS',
                 users: [...res.data.users],
