@@ -5,6 +5,8 @@ import Logout from './Logout';
 import { usersAPI } from '../../DAL/api';
 import Cookies from 'universal-cookie';
 import { isExpired, decodeToken } from "react-jwt";
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function AuthContainer() {
 
@@ -17,9 +19,11 @@ function AuthContainer() {
     let dispatch = useDispatch();
     let isAuthorized = useSelector(state => state.authReducer.authorized);
     let token = cookies.get('cookie localhost');
-
+    let ownerId = useSelector(state => state.authReducer.id);
+    const navigate = useNavigate();
 
     useEffect(() => {
+        
         if (!isExpired(token)) {
             usersAPI.authentification(token, decodeToken(token).id)
                 .then(res => {
@@ -31,8 +35,8 @@ function AuthContainer() {
         else {
             cookies.remove('cookie localhost')
             dispatch({ type: 'SET_AUTHORIZED', authorized: false })
-            dispatch({ type: 'REMOVE_USER_DATA' })
-            return <redirect to={'/'} />
+            dispatch({ type: 'REMOVE_USER_DATA' });
+            navigate('/', {replace: true});
         }
 
     }, [])

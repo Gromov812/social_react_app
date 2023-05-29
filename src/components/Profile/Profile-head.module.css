@@ -125,3 +125,21 @@ background: #00000091;
   display: block;
   max-width: 100%;
 }
+
+@media (max-width: 768px) {
+  .profile__pic {
+    display: none;
+  }
+  .profile_info {
+    flex-direction: column;
+  }
+  .avatar {
+    align-items: center;
+  }
+  .profile_text > h2 {
+    text-align: center;
+  }
+  .status {
+    text-align: center;
+  }
+}

@@ -26,3 +26,9 @@ height: 100%;
   flex: 0 0 85%;
   padding: 5px 0 0 5px
 }
+@media (max-width: 768px) {
+  .main {
+    flex-direction: column;
+    padding: 0 5px;
+  }
+}

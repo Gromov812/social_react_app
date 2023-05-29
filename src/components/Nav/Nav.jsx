@@ -20,6 +20,7 @@ const Nav = () => {
   
   return <>
    { isAuthorized && <nav className={n.nav}>
+    <div className={n.mobile__menu}></div>
     <div className={n.item_list}> 
     {isAuthorized ? 
       <>
