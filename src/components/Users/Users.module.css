@@ -142,5 +142,14 @@
 }
 
 @media (max-width:768px) {
-    
+
+    .user_profile {
+        width: 90%;
+    }
+    .user__search_block {
+        text-align: center;
+    }
+    .modal__block_content {
+        width: 90%;
+    }
 }

@@ -15,11 +15,12 @@ import h from '../Header/Header.module.css'
                         registerUser(login, pass, email)
                     }}>
                 <label htmlFor="email">Email:</label>
-                    <input type="text" id='email' onChange={(e)=> setEmail(e.target.value)} value={email} required/>
+
+                    <input type="text" id='email' onChange={(e)=> setEmail(e.target.value)} value={email} required />
                 <label htmlFor="login">Login:</label>
-                    <input type="text" id='login' onChange={(e)=> setLogin(e.target.value)} value={login} required/>
+                    <input type="text" id='login' onChange={(e)=> setLogin(e.target.value)} value={login} required />
                 <label htmlFor="password">Password:</label>
-                    <input type="text" id='password' onChange={(e)=> setPass(e.target.value)} value={pass} required/>
+                    <input type="text" id='password' onChange={(e)=> setPass(e.target.value)} value={pass} required />
                     <button type='submit' >Register user</button>
                 </form>
 

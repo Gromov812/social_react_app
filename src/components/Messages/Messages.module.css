@@ -108,7 +108,7 @@
   }
   .button {
     background: #fff;
-    height: 70%;
+    height: 70px;
     border: 1px #cfcfcf solid;
     margin: 0 0 0 10px;
     padding: 0 15px 0 15px;
@@ -132,5 +132,11 @@
 @media (max-width: 768px) {
   .container {
     flex-flow: column wrap;
+  }
+  .dialogContainer {
+    flex: 1;
+  }
+  .screen {
+    height: 100%;
   }
 }

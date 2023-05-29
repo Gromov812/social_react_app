@@ -132,3 +132,17 @@
         padding: 15px 0;
         font-size: 1.2rem;
     }
+
+    @media (max-width: 768px) {
+        .add_new_post textarea {
+            width: 80%;
+            margin: 0;
+        }
+        .add_new_post {
+            justify-content: center;
+        }
+        .not__autorized_block > p {
+            text-align: center;
+            padding: 15px 0;
+        }
+    }

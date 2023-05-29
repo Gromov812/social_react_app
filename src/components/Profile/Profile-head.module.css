@@ -130,4 +130,16 @@ background: #00000091;
   .profile__pic {
     display: none;
   }
+  .profile_info {
+    flex-direction: column;
+  }
+  .avatar {
+    align-items: center;
+  }
+  .profile_text > h2 {
+    text-align: center;
+  }
+  .status {
+    text-align: center;
+  }
 }
