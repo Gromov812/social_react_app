@@ -14,7 +14,7 @@ import Diversity3Icon from '@mui/icons-material/Diversity3';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 
-const Nav = ({setCurrentPageName, isOpenMenu}) => {
+const Nav = ({setCurrentPageName, isOpenMenu, setIsOpenMenu}) => {
 
   let isAuthorized = useSelector(state => state.authReducer.authorized)
 
@@ -57,8 +57,8 @@ const Nav = ({setCurrentPageName, isOpenMenu}) => {
   const setActive = ({ isActive }) => isActive ? `${n.active} ${n.item}` : n.item;
 
   return <>
-    {isAuthorized && <nav className={n.nav}>
-      <div className={n.mobile__menu}></div>
+    <nav className={n.nav}>
+    
 
       <div className={isOpenMenu ? `${n.item_list} ${n.item_list__open} `: `${n.item_list}`}>
         {isAuthorized ?
@@ -73,15 +73,15 @@ const Nav = ({setCurrentPageName, isOpenMenu}) => {
 
             <List>
               <NavLink to="/">
-                <ListItemButton selected={selectedIndex === '/'} >
+                <ListItemButton selected={selectedIndex === '/'} onClick={() => setIsOpenMenu(false)}>
                   <ListItemIcon>
                     <DnsIcon />
                   </ListItemIcon>
                   <ListItemText primary="Posts Wall" />
-                </ListItemButton>
+                </ListItemButton >
               </NavLink>
               <NavLink to="/messages">
-                <ListItemButton selected={selectedIndex === '/messages'}>
+                <ListItemButton selected={selectedIndex === '/messages'} onClick={() => setIsOpenMenu(false)}>
                 <ListItemIcon>
                     <MessageIcon />
                   </ListItemIcon>
@@ -89,7 +89,7 @@ const Nav = ({setCurrentPageName, isOpenMenu}) => {
                 </ListItemButton>
               </NavLink>
               <NavLink to="/users_list">
-                <ListItemButton selected={selectedIndex === '/users_list'} >
+                <ListItemButton selected={selectedIndex === '/users_list'} onClick={() => setIsOpenMenu(false)}>
                 <ListItemIcon>
                     <GroupIcon />
                   </ListItemIcon>
@@ -97,7 +97,7 @@ const Nav = ({setCurrentPageName, isOpenMenu}) => {
                 </ListItemButton>
               </NavLink>
               <NavLink to="/friends">
-                <ListItemButton selected={selectedIndex === "/friends"} >
+                <ListItemButton selected={selectedIndex === "/friends"} onClick={() => setIsOpenMenu(false)}>
                 <ListItemIcon>
                     <Diversity3Icon />
                   </ListItemIcon>
@@ -105,7 +105,7 @@ const Nav = ({setCurrentPageName, isOpenMenu}) => {
                 </ListItemButton>
               </NavLink>
               <NavLink to="/settings">
-                <ListItemButton selected={selectedIndex === '/settings'} >
+                <ListItemButton selected={selectedIndex === '/settings'} onClick={() => setIsOpenMenu(false)}>
                 <ListItemIcon>
                     <SettingsIcon />
                   </ListItemIcon>
@@ -118,7 +118,7 @@ const Nav = ({setCurrentPageName, isOpenMenu}) => {
           </>
           : ''}
       </div>
-    </nav>}
+    </nav>
   </>
 };
 

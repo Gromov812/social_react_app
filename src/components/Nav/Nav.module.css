@@ -8,7 +8,7 @@
 .item_list {
   list-style: none;
   background: #fff;
-  height: 70vh;
+  height: 100%;
   border: 1px #e7e7e7 solid;
 }
 .item_list a {
@@ -52,12 +52,10 @@
 @media (max-width: 768px) {
 
   .item_list {
-    max-height: 0;
-    height: 100%;
-    transition: 0.2s all ease-in-out;
+    display: none;
   }
   .item_list__open {
-    max-height: 500px;
+    display: block;
   }
 
   .nav {

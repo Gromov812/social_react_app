@@ -28,7 +28,7 @@ return <>
     <BrowserRouter>
       <Header currentPageName={currentPageName} setIsOpenMenu={setIsOpenMenu} isOpenMenu={isOpenMenu} />
       <main className="main">
-        <Nav setCurrentPageName={setCurrentPageName} isOpenMenu={isOpenMenu} />
+        <Nav setCurrentPageName={setCurrentPageName} isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
         <div className="content">
           <Routes>
             <Route path="/" element={<WallContainer/>} />
