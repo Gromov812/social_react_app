@@ -35,7 +35,6 @@ function Auth({ setPass, setLogin, authorizeMe, login, pass, errorMessage }) {
                     <TextField InputLabelProps={{
                         style: { color: '#fff' },
                     }}
-
                         color="success"
                         id="outlined-basic"
                         label="Login"
@@ -50,6 +49,7 @@ function Auth({ setPass, setLogin, authorizeMe, login, pass, errorMessage }) {
                         color="success"
                         id="outlined-basic"
                         label="Password"
+                        type="password"
                         size='small'
                         value={pass}
                         onChange={passwordHandler}

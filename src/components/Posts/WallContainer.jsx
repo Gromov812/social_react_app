@@ -8,6 +8,7 @@ import w from './PostsWall.module.css';
 import authorizedSamPicture from '../../assets/img/authorized_Sam.jpg'
 import { typeOnWallTextArea, getUserPostsThunkCreator} from '../../redux/wall-reducer';
 import { Link } from 'react-router-dom';
+import MuiAlert from '@mui/material/Alert';
 
 
 function WallContainer() {
@@ -18,6 +19,9 @@ function WallContainer() {
     const state = useSelector(state => state.wallReducer);
     const dispatch = useDispatch()
 
+    // const Alert = React.forwardRef(function Alert(props, ref) {
+    //     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    //   });
 
     useEffect(() => {
         if (isAuthorized) {
@@ -60,10 +64,10 @@ function WallContainer() {
                 null
                 :
                 <div className={w.not__autorized_block}>
-                    <img className={w.image} src={authorizedSamPicture} alt="Unauthorezid Sam" />
+                    <img className={w.image} src={authorizedSamPicture} alt="Unauthorized Sam" />
                     <p>You are not authorized.</p>
-                    <p className={w.small_text}>Use Login: Toby14 Pass: password123 </p>
-
+                 
+                    <MuiAlert elevation={6}  variant="filled" severity="info">Use Login: <b>Toby14</b> | Pass: <b>password123</b></MuiAlert>
                     <p className={w.small_text}>or <Link to="/register">register</Link> new account</p>
 
                 </div>

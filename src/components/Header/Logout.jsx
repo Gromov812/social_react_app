@@ -1,13 +1,16 @@
 import React from 'react'
 import l from './Header.module.css';
-function Logout ({logout, name}) {
+import Button from '@mui/material/Button';
 
+
+function Logout ({logout, name}) {
 
     return (
         <>
             <div className={l.welcome}>
                Добро пожаловать,  <span className={l.welcome__name}> {name}! </span>
-                <button className={l.button} onClick={logout} path='/'>Log out</button>
+               <Button variant="contained" onClick={logout} path='/'>Log out</Button>
+                {/* <button className={l.button} onClick={logout} >Log out</button> */}
             </div>
         </>
     )

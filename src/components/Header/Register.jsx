@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import h from '../Header/Header.module.css'
+import { TextField, FormControl, Button } from "@mui/material";
 
- function Register({registerUser}) {
-    
+function Register({ registerUser }) {
+
     let [login, setLogin] = useState('');
     let [pass, setPass] = useState('');
     let [email, setEmail] = useState('');
@@ -11,20 +12,55 @@ import h from '../Header/Header.module.css'
         <>
             <div className={h.register__block}>
                 <form action="submit" onSubmit={(e) => {
-                        e.preventDefault();
-                        registerUser(login, pass, email)
-                    }}>
-                <label htmlFor="email">Email:</label>
+                    e.preventDefault();
+                    registerUser(login, pass, email)
+                }}>
+                    {/* <label htmlFor="email">Email:</label>
 
-                    <input type="text" id='email' onChange={(e)=> setEmail(e.target.value)} value={email} required />
-                <label htmlFor="login">Login:</label>
-                    <input type="text" id='login' onChange={(e)=> setLogin(e.target.value)} value={login} required />
-                <label htmlFor="password">Password:</label>
-                    <input type="text" id='password' onChange={(e)=> setPass(e.target.value)} value={pass} required />
+                    <input type="text" id='email' onChange={(e) => setEmail(e.target.value)} value={email} required />
+                    <label htmlFor="login">Login:</label>
+                    <input type="text" id='login' onChange={(e) => setLogin(e.target.value)} value={login} required />
+                    <label htmlFor="password">Password:</label>
+                    <input type="text" id='password' onChange={(e) => setPass(e.target.value)} value={pass} required />
                     <button type='submit' >Register user</button>
-                </form>
+                </form> */}
+        
+                    <h2>Register form</h2>
+                    <TextField
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                        label="Email"
+                        required
+                        variant="outlined"
+                        color="secondary"
+                        type="email"
+                        fullWidth
+                    />
+                    <TextField
+                        onChange={(e) => setLogin(e.target.value)}
+                        value={login}
+                        label="Login"
+                        required
+                        variant="outlined"
+                        color="secondary"
+                        type="text"
+                        fullWidth
+                    />
+                    <TextField
+                        onChange={(e) => setPass(e.target.value)}
+                        value={pass}
+                        label="Password"
+                        required
+                        variant="outlined"
+                        color="secondary"
+                        type="password"
+                        fullWidth
+                    />
+                    <Button variant="outlined" color="secondary" type="submit">Register</Button>
 
+                </form>
             </div>
+
         </>
     )
 }
