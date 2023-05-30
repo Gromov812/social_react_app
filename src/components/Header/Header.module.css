@@ -21,6 +21,10 @@
   margin: 0 10px 0 0;
   width: 100%;
   text-align: right;
+  display: flex;
+  justify-content: right;
+  align-items: baseline;
+  gap: 0 10px;
 }
 .auth__block > form {
   display: flex;
@@ -122,6 +126,11 @@ align-self: flex-end;
   outline: none;
   background: #FFF;
 }
+.register__link {
+  display: flex;
+  flex-direction: column;
+  gap: 5px 10px;
+}
 .register__link a {
   text-decoration: none;
   font-size: 0.8rem;
@@ -140,5 +149,8 @@ align-self: flex-end;
   }
   .mobile__menu {
     display: block;
+  }
+  .register__link {
+    gap: 15px 15px;
   }
 }

@@ -13,7 +13,8 @@ import GroupIcon from '@mui/icons-material/Group';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import SettingsIcon from '@mui/icons-material/Settings';
 
-const Nav = ({setCurrentPageName}) => {
+
+const Nav = ({setCurrentPageName, isOpenMenu}) => {
 
   let isAuthorized = useSelector(state => state.authReducer.authorized)
 
@@ -58,7 +59,8 @@ const Nav = ({setCurrentPageName}) => {
   return <>
     {isAuthorized && <nav className={n.nav}>
       <div className={n.mobile__menu}></div>
-      <div className={n.item_list}>
+
+      <div className={isOpenMenu ? `${n.item_list} ${n.item_list__open} `: `${n.item_list}`}>
         {isAuthorized ?
           <>
             {/* <NavLink to="/" className = {setActive} >Posts Wall</NavLink>
@@ -67,6 +69,7 @@ const Nav = ({setCurrentPageName}) => {
       <NavLink to="/friends" className = {setActive}>Friends</NavLink> 
       <NavLink to="/music" className = {setActive}>Music</NavLink>
       <NavLink to="/settings" className = {setActive}>Settings</NavLink> */}
+
 
             <List>
               <NavLink to="/">
@@ -110,6 +113,8 @@ const Nav = ({setCurrentPageName}) => {
                 </ListItemButton>
               </NavLink>
             </List>
+
+
           </>
           : ''}
       </div>

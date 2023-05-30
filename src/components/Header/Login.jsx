@@ -60,11 +60,12 @@ function Auth({ setPass, setLogin, authorizeMe, login, pass, errorMessage }) {
                     <label className={h.auth__block_label} htmlFor="pass">Password:</label>
                     <input className={h.auth__block_input} placeholder='Password' type="text" id='pass' onChange={(e) => setPass(e.target.value)} value={pass} required/> */}
                     {/* <button className={h.button} type='submit'>Log in</button> */}
-                    <Button variant="contained" type='submit'>Log me in!</Button>
+                  
 
                 </form>
-                <div className={h.auth__block_notice}>{errorMessage && <span className={h.auth__block_error}>{errorMessage}</span>}</div>
+
                 <div className={h.register__link}>
+                <Button variant="contained" type='submit'>Log me in!</Button>
                     <Link to={'/register'}><Button
                         style={{
                             color: '#FFF'
@@ -74,6 +75,7 @@ function Auth({ setPass, setLogin, authorizeMe, login, pass, errorMessage }) {
                         variant="text"
                     >Register</Button></Link>
                 </div>
+                <div className={h.auth__block_notice}>{errorMessage && <span className={h.auth__block_error}>{errorMessage}</span>}</div>
             </div>
         </>
     )

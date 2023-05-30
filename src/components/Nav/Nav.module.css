@@ -52,7 +52,12 @@
 @media (max-width: 768px) {
 
   .item_list {
+    max-height: 0;
     height: 100%;
+    transition: 0.2s all ease-in-out;
+  }
+  .item_list__open {
+    max-height: 500px;
   }
 
   .nav {
