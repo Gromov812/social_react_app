@@ -153,4 +153,12 @@ align-self: flex-end;
   .register__link {
     gap: 15px 15px;
   }
+  .auth__block > form {
+    flex-flow: column wrap;
+    width: 100%;
+  }
+  .auth__block_login, .auth__block_password {
+    width: 100%;
+  }
+
 }

@@ -31,10 +31,11 @@ function Auth({ setPass, setLogin, authorizeMe, login, pass, errorMessage }) {
 
             <div className={h.auth__block}>
                 <form action="submit" onSubmit={authorization}>
-
+                    <div className={h.auth__block_login}>
                     <TextField InputLabelProps={{
                         style: { color: '#fff' },
                     }}
+                    sx={{width: '100%'}}
                         color="success"
                         id="outlined-basic"
                         label="Login"
@@ -42,10 +43,13 @@ function Auth({ setPass, setLogin, authorizeMe, login, pass, errorMessage }) {
                         value={login}
                         onChange={loginHandler}
                         required />
+                        </div>
+                        <div className={h.auth__block_password}>
                     <TextField
                         InputLabelProps={{
                             style: { color: '#fff' },
                         }}
+                        sx={{width: '100%'}}
                         color="success"
                         id="outlined-basic"
                         label="Password"
@@ -54,27 +58,28 @@ function Auth({ setPass, setLogin, authorizeMe, login, pass, errorMessage }) {
                         value={pass}
                         onChange={passwordHandler}
                         required />
-
+                        </div>
                     {/* <label className={h.auth__block_label} htmlFor="login">Login:</label>
                     <input className={h.auth__block_input} placeholder='Login' type="text" id='login' onChange={(e) => setLogin(e.target.value)} value={login} required/>
                     <label className={h.auth__block_label} htmlFor="pass">Password:</label>
                     <input className={h.auth__block_input} placeholder='Password' type="text" id='pass' onChange={(e) => setPass(e.target.value)} value={pass} required/> */}
                     {/* <button className={h.button} type='submit'>Log in</button> */}
                   
-
-                </form>
-
-                <div className={h.register__link}>
+                    <div className={h.register__link}>
                 <Button variant="contained" type='submit'>Log me in!</Button>
                     <Link to={'/register'}><Button
                         style={{
-                            color: '#FFF'
+                            color: '#FFF',
+                            
                         }}
                         color="primary"
                         size="small"
                         variant="text"
                     >Register</Button></Link>
                 </div>
+                </form>
+
+
                 <div className={h.auth__block_notice}>{errorMessage && <span className={h.auth__block_error}>{errorMessage}</span>}</div>
             </div>
         </>
