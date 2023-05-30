@@ -7,6 +7,7 @@
   align-items: center;
   font-size: 1rem;
   word-spacing: 10px;
+  padding: 15px 10px;
 }
 .logo img{
   margin: 3px 0 0 3px;
@@ -127,12 +128,17 @@ align-self: flex-end;
   color: #FFF;
   padding: 0 20px;
 }
-
+.mobile__menu {
+  display: none;
+}
 @media (max-width: 768px) {
   .welcome {
     text-align: right;
   }
   .button {
     margin: 10px 0;
+  }
+  .mobile__menu {
+    display: block;
   }
 }

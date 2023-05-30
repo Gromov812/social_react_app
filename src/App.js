@@ -1,11 +1,11 @@
 
 import './App.css';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './components/Header/Header';
 import Nav from './components/Nav/Nav';
 import WallContainer from './components/Posts/WallContainer';
 import Messages from './components/Messages/Messages';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import store from './redux/redux';
 import { Provider, useSelector } from 'react-redux'
 import Users from './components/Users/UsersContainer';
@@ -17,12 +17,17 @@ import ProfileSettingsContainer from './components/ProfileSettings/ProfileSettin
 
 function App() {
 
+
+
+
+const [currentPageName, setCurrentPageName] = useState('Posts Wall');
+
 return <>
 <Provider store={store}>
     <BrowserRouter>
-      <Header />
+      <Header currentPageName={currentPageName} />
       <main className="main">
-        <Nav />
+        <Nav setCurrentPageName={setCurrentPageName} />
         <div className="content">
           <Routes>
             <Route path="/" element={<WallContainer/>} />
