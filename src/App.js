@@ -20,15 +20,14 @@ function App() {
 
 
 
-const [currentPageName, setCurrentPageName] = useState('Posts Wall');
 const [isOpenMenu, setIsOpenMenu] = useState(false);
 
 return <>
 <Provider store={store}>
     <BrowserRouter>
-      <Header currentPageName={currentPageName} setIsOpenMenu={setIsOpenMenu} isOpenMenu={isOpenMenu} />
+      <Header setIsOpenMenu={setIsOpenMenu} isOpenMenu={isOpenMenu} />
       <main className="main">
-        <Nav setCurrentPageName={setCurrentPageName} isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
+        <Nav isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
         <div className="content">
           <Routes>
             <Route path="/" element={<WallContainer/>} />

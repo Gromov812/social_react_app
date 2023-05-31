@@ -21,6 +21,7 @@ function UserFriendsListContainer(props) {
     const [upd, setUpd] = useState(false);
     const [isModalActive, setModalActive] = useState(false);
     const [modalData, setModalData] = useState({})
+    const [isFetching, setFetching] = useState(true);
 
     const navigate = useNavigate();
 
@@ -30,6 +31,7 @@ function UserFriendsListContainer(props) {
             id = decodeToken(token).id;
         }
         dispatch(getUserListThunkCreator(token, id));
+        setFetching(false)
         if (!isAuthorized) navigate('/', {replace: true})
     }, [isAuthorized, upd])
 
@@ -60,7 +62,7 @@ function UserFriendsListContainer(props) {
     
         <h1>FRIENDS LIST</h1>
         <ModalNewMessage isActive={isModalActive} modalData={modalData} setModalActive={setModalActive} />
-        <Users users={friends} />
+        <Users  state={state} token={token} isFetching={isFetching} setFetching={setFetching} users={friends} />
     </div>
     )
 }

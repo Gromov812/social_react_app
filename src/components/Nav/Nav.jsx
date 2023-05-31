@@ -14,7 +14,7 @@ import Diversity3Icon from '@mui/icons-material/Diversity3';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 
-const Nav = ({setCurrentPageName, isOpenMenu, setIsOpenMenu}) => {
+const Nav = ({ isOpenMenu, setIsOpenMenu}) => {
 
   let isAuthorized = useSelector(state => state.authReducer.authorized)
 
@@ -29,29 +29,6 @@ const Nav = ({setCurrentPageName, isOpenMenu, setIsOpenMenu}) => {
 
   useEffect(() => {
     setSelectedIndex(`${location}`);
-    switch (location) {
-        case '/': {
-          setCurrentPageName(isAuthorized ? 'Posts Wall' : '');
-          break;
-        }
-        case '/messages': {
-          setCurrentPageName('Messages');
-          break;
-        }
-        case '/users_list': {
-          setCurrentPageName('Users List');
-          break;
-        }
-        case '/friends': {
-          setCurrentPageName('Friends List');
-          break;
-        }
-        case '/settings': {
-          setCurrentPageName('Settings');
-          break;
-        }
-    }
-
   }, [location])
 
   const setActive = ({ isActive }) => isActive ? `${n.active} ${n.item}` : n.item;

@@ -43,42 +43,42 @@ function UsersContainer() {
     }
 
 
-    function loadMoreUsers() {
-        console.log(token, state.currentUsersPage + 1, state.usersPerList, id);
-        setFetching(true);
-        usersAPI.getUsers(token, state.currentUsersPage + 1, state.usersPerList, id).then(res => {
-            dispatch({
-                type: 'LOAD_MORE_USERS',
-                users: [...res.data.users],
-            })
-        })
-            .then(() => {
-                setFetching(false)
-            })
-    }
+    // function loadMoreUsers() {
+    //     console.log(token, state.currentUsersPage + 1, state.usersPerList, id);
+    //     setFetching(true);
+    //     usersAPI.getUsers(token, state.currentUsersPage + 1, state.usersPerList, id).then(res => {
+    //         dispatch({
+    //             type: 'LOAD_MORE_USERS',
+    //             users: [...res.data.users],
+    //         })
+    //     })
+    //         .then(() => {
+    //             setFetching(false)
+    //         })
+    // }
 
-    function setPagination(page) {
+    //  function setPagination(page) {
 
-        if (!userSearchValue) {
-            setFetching(true);
-            usersAPI.getUsers(token, page, state.usersPerList, id)
-                .then(res => {
-                    console.log(`pag res >> `, res);
-                    dispatch({ type: 'SET_PAGINATION_PAGE', page: page, users: [...res.data.users] })
-                })
-                .then(() => {
-                    setFetching(false);
-                })
-        }
-        else {
-            setFetching(true)
-            usersAPI.getFilteredUsers(userSearchValue, page).then(res => {
-                console.log(res);
-                dispatch({ type: 'SET_USERS', page: page, users: res.data.users, totalUsersCount: res.data.totalUsers })
-                setFetching(false);
-            });
-        }
-    }
+    //     if (!userSearchValue) {
+    //         setFetching(true);
+    //         usersAPI.getUsers(token, page, state.usersPerList, id)
+    //             .then(res => {
+    //                 console.log(`pag res >> `, res);
+    //                 dispatch({ type: 'SET_PAGINATION_PAGE', page: page, users: [...res.data.users] })
+    //             })
+    //             .then(() => {
+    //                 setFetching(false);
+    //             })
+    //     }
+    //     else {
+    //         setFetching(true)
+    //         usersAPI.getFilteredUsers(userSearchValue, page).then(res => {
+    //             console.log(res);
+    //             dispatch({ type: 'SET_USERS', page: page, users: res.data.users, totalUsersCount: res.data.totalUsers })
+    //             setFetching(false);
+    //         });
+    //     }
+    // }
 
 
     // LEGACY BEFORE MUI
@@ -87,35 +87,35 @@ function UsersContainer() {
     // })
 
 
-    function followUser(userId, followId) {
-        console.log(`followUser called`);
+    // function followUser(userId, followId) {
+    //     console.log(`followUser called`);
 
-        usersAPI.postFollowUser(userId, followId).then(res => console.log(res));
-    }
+    //     usersAPI.postFollowUser(userId, followId).then(res => console.log(res));
+    // }
 
-    function unfollowUser(userId, followId) {
-        console.log(`unfollowUser called`);
+    // function unfollowUser(userId, followId) {
+    //     console.log(`unfollowUser called`);
 
-        usersAPI.deleteUnfollowUser(userId, followId).then(res => console.log(res));
-    }
+    //     usersAPI.deleteUnfollowUser(userId, followId).then(res => console.log(res));
+    // }
 
 
 
-    function searchUserInputHandler(e) {
+    // function searchUserInputHandler(e) {
 
-        setUserSearchValue(e.target.value)
+    //     setUserSearchValue(e.target.value)
 
-        usersAPI.getFilteredUsers(e.target.value).then(res => {
-            dispatch({ type: 'SET_USERS', users: res.data.users, totalUsersCount: res.data.totalUsers, page: 1 })
-        });
+    //     usersAPI.getFilteredUsers(e.target.value).then(res => {
+    //         dispatch({ type: 'SET_USERS', users: res.data.users, totalUsersCount: res.data.totalUsers, page: 1 })
+    //     });
 
-    }
+    // }
 
     let users = state.users
         .map((el, i) => {
             let followed = state.userFriendlist ? state.userFriendlist.map(el => el.id).includes(el.id) : false;
             return <>
-                <UserProfileBlock key={i} setActive={sendMessageModalHandler} subscribe={subscribe} setSubscribe={setSubscribe} follow={followed} unfollowUser={unfollowUser} followUser={followUser} photo={el.photo} userId={id} name={el.name} id={el.id} dispatch={dispatch} />
+                <UserProfileBlock key={i} setActive={sendMessageModalHandler} subscribe={subscribe} setSubscribe={setSubscribe} follow={followed} photo={el.photo} userId={id} name={el.name} id={el.id} dispatch={dispatch} />
             </>
 
         })
@@ -127,7 +127,7 @@ function UsersContainer() {
         <ModalNewMessage isActive={isModalActive} modalData={modalData} setModalActive={setModalActive} />
 
         {isAuthorized ?
-            isFetching ? <Preloader /> : <Users userSearchValue={userSearchValue} setPagination={setPagination} searchUserInputHandler={searchUserInputHandler} users={users} loadMoreUsers={loadMoreUsers} pages={state.totalPages} currentUsersPage={state.currentUsersPage} />
+          <Users isFetching={isFetching} setFetching={setFetching} state={state} token={token} userSearchValue={userSearchValue} users={users} pages={state.totalPages}  />
             :
             null
         }

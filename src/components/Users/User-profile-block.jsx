@@ -1,13 +1,28 @@
 import React, { useState } from 'react'
 import u from './Users.module.css';
 import { NavLink } from 'react-router-dom';
+import { usersAPI } from '../../DAL/api';
 
 
-function UserProfileBlock({ name, photo, id, dispatch, followUser, unfollowUser, userId, follow, setActive}) {
+function UserProfileBlock({ name, photo, id, dispatch, userId, follow, setActive}) {
 const [upd, setUpd] = useState(follow)
 
 
+
 const setId = (id) => dispatch({type:'SET_CURRENT_PROFILE_PAGE_USER_ID', id});
+
+
+function followUser(userId, followId) {
+    console.log(`followUser called`);
+
+    usersAPI.postFollowUser(userId, followId).then(res => console.log(res));
+}
+
+function unfollowUser(userId, followId) {
+    console.log(`unfollowUser called`);
+
+    usersAPI.deleteUnfollowUser(userId, followId).then(res => console.log(res));
+}
 
     return <div key={id} className={u.user_profile}>
   

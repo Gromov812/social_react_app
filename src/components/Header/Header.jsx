@@ -13,7 +13,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useSelector } from 'react-redux';
 
 
-const Header = ({currentPageName, setIsOpenMenu, isOpenMenu}) => {
+const Header = ({ setIsOpenMenu, isOpenMenu}) => {
 
   const isAuthorized = useSelector(state => state.authReducer.authorized);
 
@@ -55,9 +55,7 @@ const Header = ({currentPageName, setIsOpenMenu, isOpenMenu}) => {
           </IconButton>
           </div>
         }
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            {currentPageName}
-          </Typography>
+
 
           <AuthContainer />
        
