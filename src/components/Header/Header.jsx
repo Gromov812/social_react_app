@@ -18,10 +18,12 @@ const Header = ({ setIsOpenMenu, isOpenMenu}) => {
   const isAuthorized = useSelector(state => state.authReducer.authorized);
 
     return (<>
-
+  
   <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
+     
+        <Toolbar sx={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+       
         <Typography
             variant="h6"
             noWrap
@@ -58,8 +60,9 @@ const Header = ({ setIsOpenMenu, isOpenMenu}) => {
 
 
           <AuthContainer />
-       
+         
         </Toolbar>
+      
       </AppBar>
     </Box>
 

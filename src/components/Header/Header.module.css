@@ -82,6 +82,7 @@ outline: none;
 .welcome {
   margin: 0 10px;
   color: #FFF;
+  display: flex;
 }
 .welcome__name {
   display: inline-block;
