@@ -4,18 +4,10 @@ import { usersAPI } from "../../DAL/api";
 import Contact from "./Contact";
 import m from './Messages.module.css';
 
-const ContactsWindow = (props) => {
-    const dispatch = useDispatch();
+const ContactsWindow = ({dialogRef, state, dispatch}) => {
     const ownerId = useSelector(state => state.authReducer.id);
 
     useEffect(() => {
-    //     axios.post('http://127.0.0.1:3005/messages/post', {
-                  
-    //         from_id: 50, 
-    //         to_id: 39,
-    //         message: `${new Date()}` 
-          
-    // }).then(res => console.log(res))
 
         usersAPI.getDialogContacts(ownerId)
         .then(res => { 
@@ -33,10 +25,11 @@ const ContactsWindow = (props) => {
         })
 
     }, [ownerId])
-    let contacts = props.state.contactsData
+    let contacts = state.contactsData
         .map((item,i) =>
             <Contact
-                dispatch={props.dispatch}
+                dialogRef={dialogRef}
+                dispatch={dispatch}
                 key={i}
                 id={item.id} 
                 name={item.name}

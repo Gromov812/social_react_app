@@ -126,6 +126,7 @@ export const getUserListThunkCreator = (token, id) => {
     return (dispatch, getState) => {
         usersAPI.getUsers(token, getState().usersReducer.currentUsersPage, getState().usersReducer.usersPerList, id)
         .then(res => {
+            console.log(res);
             dispatch({ type: 'SET_USERS', users: res.data.users, totalUsersCount: res.data.totalUsers, })
             dispatch({ type: 'SET_USER_FRIENDLIST', friendList: res.data.friends })
         })

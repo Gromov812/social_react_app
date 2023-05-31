@@ -21,8 +21,26 @@ const Header = ({currentPageName, setIsOpenMenu, isOpenMenu}) => {
   <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
+        <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="/"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            SOCIALS
+          </Typography>
         {isAuthorized && 
           <div className={h.mobile__menu}>
+          
           <IconButton
             size="large"
             edge="start"

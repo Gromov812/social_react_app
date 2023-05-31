@@ -4,7 +4,7 @@ import m from './Messages.module.css';
 
 
 const Contact = (props) => {
-    let { id, name, unreadCounter } = props;
+    let { id, name, unreadCounter, dialogRef } = props;
 
 
     const setClass = ({ isActive }) => isActive ? `${m.active} ${m.item}` : m.item;
@@ -12,6 +12,11 @@ const Contact = (props) => {
     return <>
 
         <NavLink
+            onClick={() => {
+            console.log(dialogRef.current)
+            dialogRef.current.scrollIntoView({ block: 'end', behavior: 'smooth' })}
+                
+            } 
             key={id}
             to={`/messages/${id}`}
             className={setClass}>

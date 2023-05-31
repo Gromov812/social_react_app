@@ -7,8 +7,11 @@ import { sendMessage, setConversationId, typeOnPrimaryMsgTextArea } from "../../
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { usersAPI } from "../../DAL/api";
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
 
-const DialogWindow = ({ state, dispatch }) => {
+
+const DialogWindow = ({ state, dispatch, dialogRef }) => {
 
     let ownerId = useSelector(state => state.authReducer.id);
     let msgStateLength = useSelector(state => state.messageReducer.contactsMsg.length);
@@ -44,7 +47,10 @@ const DialogWindow = ({ state, dispatch }) => {
         if (params['*']) {
             return <>
                 <textarea placeholder="Type your message here..." onChange={(e) => dispatch(typeOnPrimaryMsgTextArea(e.target.value))} value={state.contactsData[state.currentConversationIndex].currentMessageText} onKeyDown={(e) => (e.key === 'Enter' && e.ctrlKey) ? sendMsg(ownerId, params['*']) : ''} />
-                <button className={m.button} onClick={() => sendMsg(ownerId, params['*'])}>Send</button>
+                {/* <button className={m.button} onClick={() => sendMsg(ownerId, params['*'])}>Send</button> */}
+                <Button sx={{height: '100%', margin: '0 5px', 'border-color': '#c9c9c9', color: '#242424'}} variant="outlined" onClick={() => sendMsg(ownerId, params['*'])} endIcon={<SendIcon />}>
+        Send
+      </Button>
             </>
         }
         else return <>
@@ -78,8 +84,9 @@ const DialogWindow = ({ state, dispatch }) => {
                 {messages}
             </ScrollToBottom>
 
-            <div className={m.area}>
+            <div className={m.area}  >
                 {displayFirstScreen()}
+                <div ref={dialogRef} ></div>
             </div>
         </div>
     </>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import ContactsWindow from "./ContactsWindow";
 import DialogWindow from "./DialogWindow";
 import m from './Messages.module.css';
@@ -11,6 +11,8 @@ let state = useSelector(state => state.messageReducer)
 let isAuthorized = useSelector(state => state.authReducer.authorized);
 let dispatch = useDispatch();
 const navigate = useNavigate();
+const dialogRef = useRef();
+
 
 useEffect(() => {
     if (!isAuthorized) {
@@ -23,8 +25,8 @@ return <>
             <h2>Messages</h2>
         </div>
         <div className={m.container}>
-                <ContactsWindow state={state} dispatch={dispatch} />
-                <DialogWindow state={state} dispatch={dispatch} />
+                <ContactsWindow state={state} dispatch={dispatch} dialogRef={dialogRef} />
+                <DialogWindow state={state} dispatch={dispatch} dialogRef={dialogRef}/>
 
         </div>
     </>

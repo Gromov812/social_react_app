@@ -1,12 +1,11 @@
 import React, { useLayoutEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Users from './Users'
-import u from './Users.module.css';
 import UserProfileBlock from './User-profile-block'
 import Preloader from '../Preloader/Preloader'
 import { usersAPI } from '../../DAL/api';
 import Cookies from 'universal-cookie';
-import { generatePagination } from './generatePagination';
+// import { generatePagination } from './generatePagination';
 import { getUserListThunkCreator } from '../../redux/users-reducer';
 import ModalNewMessage from './ModalNewMessage';
 import { useNavigate } from 'react-router-dom';
@@ -33,7 +32,7 @@ function UsersContainer() {
             dispatch(getUserListThunkCreator(token, id))
             setFetching(false)
         }
-        else navigate('/', {replace: true});
+        else navigate('/', { replace: true });
     }, [isAuthorized])
 
 
@@ -48,7 +47,6 @@ function UsersContainer() {
         console.log(token, state.currentUsersPage + 1, state.usersPerList, id);
         setFetching(true);
         usersAPI.getUsers(token, state.currentUsersPage + 1, state.usersPerList, id).then(res => {
-            // console.log(res);
             dispatch({
                 type: 'LOAD_MORE_USERS',
                 users: [...res.data.users],
@@ -82,9 +80,11 @@ function UsersContainer() {
         }
     }
 
-    let pages = generatePagination(state.currentUsersPage, state.totalPages).map((el, i) => {
-        return <> <span key={i} onClick={() => setPagination(el)} className={`${u.elem} ${el == state.currentUsersPage ? u.active_elem : ''}`}>{el}</span></>
-    })
+
+    // LEGACY BEFORE MUI
+    // let pages = generatePagination(state.currentUsersPage, state.totalPages).map((el, i) => {
+    //     return <> <span key={i} onClick={() => setPagination(el)} className={`${u.elem} ${el == state.currentUsersPage ? u.active_elem : ''}`}>{el}</span></>
+    // })
 
 
     function followUser(userId, followId) {
@@ -105,16 +105,14 @@ function UsersContainer() {
 
         setUserSearchValue(e.target.value)
 
-            usersAPI.getFilteredUsers(e.target.value).then(res => {
-                dispatch({ type: 'SET_USERS', users: res.data.users, totalUsersCount: res.data.totalUsers, page: 1 })
-            });
-        
+        usersAPI.getFilteredUsers(e.target.value).then(res => {
+            dispatch({ type: 'SET_USERS', users: res.data.users, totalUsersCount: res.data.totalUsers, page: 1 })
+        });
+
     }
 
-    // console.log(`RERENDER?`);
     let users = state.users
         .map((el, i) => {
-            // console.log(state.userFriendlist);
             let followed = state.userFriendlist ? state.userFriendlist.map(el => el.id).includes(el.id) : false;
             return <>
                 <UserProfileBlock key={i} setActive={sendMessageModalHandler} subscribe={subscribe} setSubscribe={setSubscribe} follow={followed} unfollowUser={unfollowUser} followUser={followUser} photo={el.photo} userId={id} name={el.name} id={el.id} dispatch={dispatch} />
@@ -129,7 +127,7 @@ function UsersContainer() {
         <ModalNewMessage isActive={isModalActive} modalData={modalData} setModalActive={setModalActive} />
 
         {isAuthorized ?
-            isFetching ? <Preloader /> : <Users userSearchValue={userSearchValue} searchUserInputHandler={searchUserInputHandler} users={users} loadMoreUsers={loadMoreUsers} pages={pages} />
+            isFetching ? <Preloader /> : <Users userSearchValue={userSearchValue} setPagination={setPagination} searchUserInputHandler={searchUserInputHandler} users={users} loadMoreUsers={loadMoreUsers} pages={state.totalPages} currentUsersPage={state.currentUsersPage} />
             :
             null
         }
