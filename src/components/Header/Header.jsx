@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+
 import { useSelector } from 'react-redux';
 
 
@@ -31,6 +32,7 @@ const Header = ({currentPageName, setIsOpenMenu, isOpenMenu}) => {
               display: { xs: 'none', md: 'flex' },
               fontFamily: 'monospace',
               fontWeight: 700,
+              width: '100%',
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
