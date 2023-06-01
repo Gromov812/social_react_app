@@ -7,6 +7,12 @@ import ProfileSettings from './ProfileSettings';
 import './ProfileSettings.css';
 import Alert from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar';
+import Button from '@mui/material/Button';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+
+
 
 export default function ProfileSettingsContainer(props) {
 
@@ -56,6 +62,7 @@ export default function ProfileSettingsContainer(props) {
                 </Snackbar>
             </>}
             <div className='settings'>
+            
                 <form className="form" onSubmit={onSubmitSettings}>
 
                     <div className="item">
@@ -72,11 +79,22 @@ export default function ProfileSettingsContainer(props) {
 
                     <div className="item">
 
-                        <label htmlFor="gender">Gender: </label>
+                        {/* <label htmlFor="gender">Gender: </label>
                         <select name="gender" id="gender" onChange={(e) => dispatch({ type: 'USER_GENDER_SETTINGS_HANDLER', gender: e.target.value })} value={userData.info.gender} >
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
-                        </select>
+                        </select> */}
+                                <InputLabel id="demo-controlled-open-select-label">Gender</InputLabel>
+                        <Select
+          labelId="demo-controlled-open-select-label"
+          id="demo-controlled-open-select"
+          label="Gender"
+          value={"Gender"}
+          onChange={(e) => dispatch({ type: 'USER_GENDER_SETTINGS_HANDLER', gender: e.target.value })} 
+          value={userData.info.gender}         >
+          <MenuItem value={'Male'}>Male</MenuItem>
+          <MenuItem value={'Female'}>Female</MenuItem>
+        </Select>
                     </div>
 
                     <div className="item">
@@ -90,8 +108,8 @@ export default function ProfileSettingsContainer(props) {
 
                     </div>
 
-
-                    <button type='submit'>Save settings</button>
+                    <Button size='small' type='submit'>Save settings</Button>
+                    {/* <button type='submit'>Save settings</button> */}
                 </form>
             </div>
 
