@@ -89,9 +89,8 @@ export default function ProfileSettingsContainer(props) {
           labelId="demo-controlled-open-select-label"
           id="demo-controlled-open-select"
           label="Gender"
-          value={"Gender"}
           onChange={(e) => dispatch({ type: 'USER_GENDER_SETTINGS_HANDLER', gender: e.target.value })} 
-          value={userData.info.gender}         >
+          value={userData.info.gender}>
           <MenuItem value={'Male'}>Male</MenuItem>
           <MenuItem value={'Female'}>Female</MenuItem>
         </Select>
