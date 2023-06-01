@@ -12,7 +12,6 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 
-
 export default function ProfileSettingsContainer(props) {
 
     const dispatch = useDispatch();
@@ -42,7 +41,6 @@ export default function ProfileSettingsContainer(props) {
         e.preventDefault();
         usersAPI.updateProfileSettings(token, userData, ownerId).then(res => {
             if (res.status == 200) setSuccess(true)
-
         })
     }
     return (
