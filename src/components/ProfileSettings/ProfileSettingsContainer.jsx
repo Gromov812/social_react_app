@@ -47,7 +47,6 @@ export default function ProfileSettingsContainer(props) {
     }
     return (
         <div >
-
             {success && <>
                 <Snackbar
                     anchorOrigin={{ vertical: "top", horizontal: "center" }}
