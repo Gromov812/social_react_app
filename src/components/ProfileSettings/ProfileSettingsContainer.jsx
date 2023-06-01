@@ -62,23 +62,17 @@ export default function ProfileSettingsContainer(props) {
                 </Snackbar>
             </>}
             <div className='settings'>
-            
                 <form className="form" onSubmit={onSubmitSettings}>
-
                     <div className="item">
                         <label htmlFor="name">Name: </label>
                         <input type="text" id='name' onChange={(e) => dispatch({ type: 'USER_NAME_SETTINGS_HANDLER', name: e.target.value })} value={userData.name} required />
                     </div>
-
                     <div className="item">
-
                         <label htmlFor="email">Email: </label>
                         <input type="email" id='email' onChange={(e) => dispatch({ type: 'USER_EMAIL_SETTINGS_HANDLER', email: e.target.value })} value={userData.email} required />
 
                     </div>
-
                     <div className="item">
-
                         {/* <label htmlFor="gender">Gender: </label>
                         <select name="gender" id="gender" onChange={(e) => dispatch({ type: 'USER_GENDER_SETTINGS_HANDLER', gender: e.target.value })} value={userData.info.gender} >
                             <option value="Male">Male</option>
@@ -95,23 +89,18 @@ export default function ProfileSettingsContainer(props) {
           <MenuItem value={'Female'}>Female</MenuItem>
         </Select>
                     </div>
-
                     <div className="item">
-
                         <label htmlFor="age">Age: </label>
                         <input type="number" id='age' onChange={(e) => dispatch({ type: 'USER_AGE_SETTINGS_HANDLER', age: e.target.value })} value={userData.info.age} />
                     </div>
                     <div className="item">
                         <label htmlFor="city">City: </label>
                         <input type="text" id='city' onChange={(e) => dispatch({ type: 'USER_CITY_SETTINGS_HANDLER', city: e.target.value })} value={userData.info.city} />
-
                     </div>
-
                     <Button size='small' type='submit'>Save settings</Button>
                     {/* <button type='submit'>Save settings</button> */}
                 </form>
             </div>
-
             <ProfileSettings />
         </div>
     )
