@@ -13,13 +13,11 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 
 
-
 export default function ProfileSettingsContainer(props) {
 
     const dispatch = useDispatch();
     const ownerId = useSelector(state => state.authReducer.id);
     const isAuthorized = useSelector(state => state.authReducer.authorized);
-
     const userData = useSelector(state => state.authReducer.userData);
     const cookie = new Cookies();
     const token = cookie.get('cookie localhost');
@@ -47,7 +45,6 @@ export default function ProfileSettingsContainer(props) {
 
         })
     }
-
     return (
         <div >
 
@@ -70,7 +67,6 @@ export default function ProfileSettingsContainer(props) {
                     <div className="item">
                         <label htmlFor="email">Email: </label>
                         <input type="email" id='email' onChange={(e) => dispatch({ type: 'USER_EMAIL_SETTINGS_HANDLER', email: e.target.value })} value={userData.email} required />
-
                     </div>
                     <div className="item">
                         {/* <label htmlFor="gender">Gender: </label>
