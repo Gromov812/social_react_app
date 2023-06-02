@@ -13,7 +13,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
     userPosts: [
         {
             id: 1,
-             message: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Unde, aperiam maiores odio vero molestias aspernatur eum temporibus magnam natus ducimus repudiandae adipisci necessitatibus quibusdam obcaecati voluptatibus facere neque tempora nulla.',
+            message: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Unde, aperiam maiores odio vero molestias aspernatur eum temporibus magnam natus ducimus repudiandae adipisci necessitatibus quibusdam obcaecati voluptatibus facere neque tempora nulla.',
             likes: [9, 2, 3, 1],
             sent: 1672259123420,
         },
@@ -69,7 +69,7 @@ export const wallReducer = (state = _wallState, action) => {
                 el.likes = JSON.parse(el.likes)
                 return el
             });
-            
+            console.log(incomeUserPosts);
             return {
                 ...state,
                 userPosts: incomeUserPosts
@@ -175,8 +175,8 @@ export const updateLikes = (index, userId) => {
 
 export const getUserPostsThunkCreator = (ownerId) => {
     return dispatch => {
-        console.log(`getUserPostsThunkCreator`);
         usersAPI.getUserPosts(ownerId).then(res => {
+            console.log(`thunk res >> `, res);
             dispatch({ type: 'UPDATE_USER_POSTS_STATE', posts: res.data.posts })
         })
     }

@@ -9,7 +9,7 @@
   word-spacing: 10px;
   padding: 15px 10px;
 }
-.logo img{
+.logo img {
   margin: 3px 0 0 3px;
   height: 48px;
   width: 48px;
@@ -42,29 +42,27 @@
   border: none;
   border-bottom: 1px rgba(255, 255, 255, 0.4) solid;
   background: rgba(255, 255, 255, 0.15);
-  color: #FFF;
+  color: #fff;
   font-weight: 700;
   padding: 5px;
   margin: 0 10px;
   overflow: hidden;
 }
 .auth__block_input::placeholder {
-
   font-weight: 300;
-  color: #FFFFFF70;
+  color: #ffffff70;
   transition: all 0.3s linear;
   overflow: hidden;
-
 }
 .auth__block_input:focus {
-outline: none;
+  outline: none;
 }
 .auth__block_label {
   display: none;
 }
 .button {
-  border: #FFFFFFF2;
-  background: #FFF;
+  border: #fffffff2;
+  background: #fff;
   color: #0083eb;
   font-family: monospace;
   text-transform: uppercase;
@@ -74,20 +72,22 @@ outline: none;
   cursor: pointer;
 }
 .button:hover {
-  background: #FFF;
+  background: #fff;
 }
 .button:active {
   background: #d4d4d4;
 }
 .welcome {
   margin: 0 10px;
-  color: #FFF;
+  color: #fff;
   display: flex;
+  align-items: center;
 }
 .welcome__name {
   display: inline-block;
   padding: 0 15px 0 5px;
   font-weight: 700;
+  width: 100%;
 }
 .auth__block_error {
   display: inline-block;
@@ -111,21 +111,21 @@ outline: none;
   font-weight: 700;
   font-size: 1.2rem;
 }
-.register__block > form > button{
-height: 30px;
-width: 150px;
-background: #2196f3;
-color: #FFF;
-cursor: pointer;
-font-weight: 700;
-align-self: flex-end;
+.register__block > form > button {
+  height: 30px;
+  width: 150px;
+  background: #2196f3;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+  align-self: flex-end;
 }
-.register__block > form > input{
+.register__block > form > input {
   height: 30px;
   border: none;
   border-bottom: 1px #c3c3c3 solid;
   outline: none;
-  background: #FFF;
+  background: #fff;
 }
 .register__link {
   display: flex;
@@ -135,7 +135,7 @@ align-self: flex-end;
 .register__link a {
   text-decoration: none;
   font-size: 0.8rem;
-  color: #FFF;
+  color: #fff;
   padding: 0 20px;
 }
 .mobile__menu {
@@ -158,8 +158,8 @@ align-self: flex-end;
     flex-flow: column wrap;
     width: 100%;
   }
-  .auth__block_login, .auth__block_password {
+  .auth__block_login,
+  .auth__block_password {
     width: 100%;
   }
-
 }

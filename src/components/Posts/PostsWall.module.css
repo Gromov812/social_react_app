@@ -60,22 +60,25 @@
         padding: 10px 50px 0 0;
     } 
     .delete {
-        position: absolute;
-        height: 20px;
-        width: 20px;
         background-image: url(./delete.png);
-        right: 10px;
-        top: 5px;
-        cursor: pointer;
     }
     .edit {
-        position: absolute;
-        height: 20px;
-        width: 20px;
         background-image: url(./edit.png);
-        right: 40px;
+    }
+    .reply {
+            background-image: url(./reply.png);
+    }
+    .post__buttons {
+            display: inline-block;
+            height: 20px;
+            width: 20px;
+            cursor: pointer;
+            margin: 5px;
+    }
+    .post__buttons_block {
+        position: absolute;
         top: 5px;
-        cursor: pointer;
+        right: 5px;
     }
     .likes_container {
         display: inline-flex;
@@ -133,7 +136,24 @@
         padding: 15px 0;
         font-size: 1.2rem;
     }
-
+    .reply__block_message {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1; /* number of lines to show */
+        -webkit-box-orient: vertical;
+        background: #f0f0f0;
+        padding: 2px 0 2px 10px;
+    }
+    .reply__block {
+        border: 1px #e5e5e5 solid;
+        padding: 7px 5px;
+        border-radius: 7px;
+        margin: 5px;
+    }
+    .reply__block_nameinfo {
+        padding: 5px 0;
+    }
     @media (max-width: 768px) {
         .add_new_post textarea {
             width: 80%;
