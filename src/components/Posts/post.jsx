@@ -62,9 +62,7 @@ const Post = (props) => {
         </p>
 
         {/* <div className={pw.reply__block}>
-       
             <div className={pw.reply__block_message}>The commands your are looking for are editor.action.copyLinesDownAction and editor.action.copyLinesUpAction. he commands your are looking for are editor.action.copyLinesDownAction and editor.action.copyLinesUpAction. he commands your are looking for are editor.action.copyLinesDownAction and editor.action.copyLinesUpAction.</div>
-            
         </div> */}
         <pre>{props.text}</pre>
         <LikeCounter
