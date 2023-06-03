@@ -31,8 +31,8 @@ function addPost(from, to, message, isReply) {
                     
                    
                 {/* <button onClick={() => {addPost(ownerId, userId || ownerId, state.textAreaState)}} className={pw.button}>Post it!</button> */}
-                <Button sx={{height: '50px', margin: '0 5px', 'border-color': '#c9c9c9', color: '#242424'}} variant="outlined" onClick={() => {addPost(ownerId, userId || ownerId, state.textAreaState, isReply[0])}} endIcon={<SendIcon />}>
-        {!state.editData.status ? 'Post it ' : 'Save edit '}
+                <Button sx={{height: '50px', margin: '0 5px', 'border-color': '#c9c9c9', color: '#242424', minWidth: 'fit-content', textTransform: 'none'}} variant="outlined" onClick={() => {addPost(ownerId, userId || ownerId, state.textAreaState, isReply[0])}} endIcon={<SendIcon />}>
+        {!state.editData.status ? 'Send' : 'Save'}
       </Button>
             </div>
             {isReply[0] && <div className={pw.textarea__reply}>Answer to: {isReply[1]} <span style={{cursor: 'pointer', fontWeight: 'bold', fontSize: '0.9rem', background:'#FFF', padding:'2px', borderRadius:'30px', color:'#000'}} onClick={() => setReply((v) => v = [false, false])}>x</span></div>}
