@@ -15,7 +15,9 @@ const Post = (props) => {
   };
   
   function onEdit() {
+    props.textAreaRef.current.scrollIntoView({behavior: 'smooth', block: 'end'});
     props.dispatch(editPost(props.index, props.postId));
+    props.textAreaRef.current.select();
   }
 
   let date = new Date(props.sent);
