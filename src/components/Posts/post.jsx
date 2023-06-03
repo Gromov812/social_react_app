@@ -98,24 +98,24 @@ useEffect(() => {
         {props.homeLander ? (
           props.fromId == props.ownerId ? (
             <div>
-              <i className={`${pw.edit} ${pw.post__buttons}`} onClick={onEdit}></i>
-              <i className={`${pw.reply} ${pw.post__buttons}`} onClick={replyHandler}></i>
-              <i className={`${pw.delete} ${pw.post__buttons}`} onClick={deleteFunc}></i>
+              <i className={`${pw.reply} ${pw.post__buttons}`} onClick={replyHandler} title="Reply post"></i>
+              <i className={`${pw.edit} ${pw.post__buttons}`} onClick={onEdit} title="Edit post"></i>
+              <i className={`${pw.delete} ${pw.post__buttons}`} onClick={deleteFunc} title="Delete post"></i>
               </div>
           ) : (
             <div>
-              <i className={`${pw.reply} ${pw.post__buttons}`} onClick={replyHandler}></i>
-            <i className={`${pw.delete} ${pw.post__buttons}`} onClick={deleteFunc}></i>
+              <i className={`${pw.reply} ${pw.post__buttons}`} onClick={replyHandler} title="Reply post"></i>
+              <i className={`${pw.delete} ${pw.post__buttons}`} onClick={deleteFunc} title="Delete post"></i>
             </div>
           )
         ) : props.fromId == props.ownerId ? (
           <div>
-            <i className={`${pw.edit} ${pw.post__buttons}`} onClick={onEdit}></i>
-            <i className={`${pw.reply} ${pw.post__buttons}`} onClick={replyHandler}></i>
-            <i className={`${pw.delete} ${pw.post__buttons}`} onClick={deleteFunc}></i>
+              <i className={`${pw.reply} ${pw.post__buttons}`} onClick={replyHandler} title="Reply post"></i>
+              <i className={`${pw.edit} ${pw.post__buttons}`} onClick={onEdit} title="Edit post"></i>
+              <i className={`${pw.delete} ${pw.post__buttons}`} onClick={deleteFunc} title="Delete post"></i>
           </div>
         ) : (<>
-            <i className={`${pw.reply} ${pw.post__buttons}`} onClick={replyHandler}></i>
+              <i className={`${pw.reply} ${pw.post__buttons}`} onClick={replyHandler} title="Reply post"></i>
         </>
         )}
       
