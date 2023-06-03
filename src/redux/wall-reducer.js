@@ -61,9 +61,7 @@ export const wallReducer = (state = _wallState, action) => {
             }
         }
         case 'UPDATE_USER_POSTS_STATE' : {
-            let incomeUserPosts = JSON.stringify(action.posts);
-            incomeUserPosts = JSON.parse(incomeUserPosts);
-            incomeUserPosts = incomeUserPosts.map(el =>{
+            let incomeUserPosts = action.posts.map(el =>{
                 let date = new Date(el.updated)
                 el.updated = date.getTime();
                 el.likes = JSON.parse(el.likes)

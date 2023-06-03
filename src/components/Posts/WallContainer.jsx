@@ -54,11 +54,9 @@ function WallContainer() {
       },
     });
 
-    // refs[item.id]['ref'] = null;
-    // refs[item.id]['txt'] = item.message;
-
     return (
       <Post
+        avatar={item.photo}
         setReply={setReply}
         refs={refs}
         textAreaRef={textAreaRef}

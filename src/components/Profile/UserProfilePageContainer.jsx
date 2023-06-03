@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import UserProfilePage from './UserProfilePage';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { usersAPI } from '../../DAL/api';
 import Wall from '../Posts/Wall';
 import Post from '../Posts/post';
@@ -24,11 +24,14 @@ function UserProfilePageContainer() {
     let token = cookie.get('cookie localhost');
     let dispatch = useDispatch();
     let param = useParams();
+    const navigate = useNavigate();
+    let isAuthorized = useSelector(state => state.authReducer.authorized)
 
     let followed = false;
     userReducerState.userFriendlist && userReducerState.userFriendlist.forEach(el =>  followed = el.id == param.userId ? true : false)
 
     useEffect(() => {
+        if (param.userId == ownerId || !isAuthorized) navigate('/', {replace: true})
         dispatch(getUserListThunkCreator(token, ownerId))
 
         usersAPI.getCurrentUser(param.userId)
@@ -43,7 +46,7 @@ function UserProfilePageContainer() {
                 })
                 dispatch(getUserPostsThunkCreator(param.userId))
             })
-    }, [param.userId, wallReducerState.userPosts.length, followed])
+    }, [param.userId, wallReducerState.userPosts.length, followed, isAuthorized])
 
 
     function typeTextArea(e) {
@@ -86,7 +89,8 @@ function UserProfilePageContainer() {
             },
           });
 
-return         <Post
+return <Post
+avatar={item.photo}
 setReply={setReply}
 refs={refs}
 textAreaRef={textAreaRef}

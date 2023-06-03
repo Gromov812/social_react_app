@@ -4,6 +4,8 @@ import { usersAPI } from "../../DAL/api";
 import { deletePost, editPost } from "../../redux/wall-reducer";
 import LikeCounter from "./LikeCounter";
 import pw from "./PostsWall.module.css";
+import Avatar from '@mui/material/Avatar';
+
 
 const Post = (props) => {
 
@@ -66,14 +68,15 @@ useEffect(() => {
     <>
       <div className={pw.post} id={props.postId} ref={props.refs[props.postId]['current']}>
         
-        <p className={pw.name}> 
+        <div className={pw.name}> 
+        <Avatar src={props.avatar} />  
           <Link className={pw.user_link} to={`/user/${props.fromId}`}>
-            {props.fromName}
+          {props.fromName}
           </Link>
           <span>
             {' '}{dateDay} at {dateTime}
           </span>
-        </p>
+        </div>
         
         {props.reply ?
         <>
