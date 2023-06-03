@@ -70,7 +70,7 @@ useEffect(() => {
         
         <div className={pw.name}> 
         <Avatar src={props.avatar} />  
-          <Link className={pw.user_link} to={`/user/${props.fromId}`}>
+          <Link className={pw.user_link} to={props.fromId == props.ownerId ? '/' : `/user/${props.fromId}`}>
           {props.fromName}
           </Link>
           <span>

@@ -31,7 +31,7 @@ function UserProfilePageContainer() {
     userReducerState.userFriendlist && userReducerState.userFriendlist.forEach(el =>  followed = el.id == param.userId ? true : false)
 
     useEffect(() => {
-        if (param.userId == ownerId || !isAuthorized) navigate('/', {replace: true})
+        if (!isAuthorized) navigate('/', {replace: true})
         dispatch(getUserListThunkCreator(token, ownerId))
 
         usersAPI.getCurrentUser(param.userId)
