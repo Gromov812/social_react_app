@@ -28,7 +28,7 @@ const Post = (props) => {
   let dateDay = date.toLocaleDateString();
 
 
-console.log(props.refs);
+// console.log(props.refs);
 props.refs[props.postId]['current'] = useRef();
 
 

@@ -27,20 +27,20 @@ function AuthContainer() {
     useEffect(() => {
         
         if (!isExpired(token)) {
+            console.log(`not expired`);
             usersAPI.authentification(token, decodeToken(token).id)
                 .then(res => {
+          
                     let id = decodeToken(token).id
                     dispatch({ type: 'SET_USER_INFO_AFTER_LOGIN', userData: res.data.userInfo, id: id })
                     dispatch({ type: 'SET_AUTHORIZED', authorized: true })
-                })
-                axios.post('http://193.168.46.22:3005/auth/refresh_token', {id: ownerId}, {
-                    'Content-Type': 'application/json',
-                    'Authorization': token,
-                }).then(res => {
-                    console.log(`refresh >>`, res)
-                })
+                    return res;
+                }).then((res) => {
 
-                // cookies.set('cookie localhost', token);
+                    console.log(`refresh token >>`, res.data.token)
+                    cookies.remove('cookie localhost');
+                    cookies.set('cookie localhost', res.data.token, {})
+                })
         }
         else {
             cookies.remove('cookie localhost')
