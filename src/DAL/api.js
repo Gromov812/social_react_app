@@ -3,12 +3,13 @@ import axios from "axios";
 
 export const usersAPI = {
 
-    sendUserWallPost: (from, to, message) => {
-
+    sendUserWallPost: (from, to, message, reply) => {
+        console.log(`DAL >> `, reply);
         return axios.post('http://193.168.46.22:3005/user_wall_posts', {
             from: from,
             to: to,
-            message: message
+            message: message,
+            reply: reply
         })
     },
 

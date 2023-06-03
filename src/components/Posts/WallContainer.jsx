@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Wall from './Wall';
 import UserProfileInfo from '../Profile/UserProfileInfo';
 import Post from './post';
@@ -19,6 +19,9 @@ function WallContainer() {
     const state = useSelector(state => state.wallReducer);
     const dispatch = useDispatch()
 
+    const textAreaRef = useRef();
+
+    const [isReply, setReply] = useState([null, null]);
     // const Alert = React.forwardRef(function Alert(props, ref) {
     //     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     //   });
@@ -34,9 +37,33 @@ function WallContainer() {
             return dispatch(typeOnWallTextArea(e.target.value))
         }
 
-    const posts = state.userPosts
-            .map((item, i) =>
-                <Post
+        let refs = {}
+        
+        const posts = state.userPosts
+        .map((item, i) => {
+                
+
+        
+                Object.defineProperties(refs, {
+                    [item.id]:{
+                        value: {
+                        'current': null,
+                        'text': item.message,
+                        'from': item.name,
+                        'data': item.updated
+                    }
+                    }
+                })
+
+                // refs[item.id]['ref'] = null;
+                // refs[item.id]['txt'] = item.message;
+             
+                return <Post
+                setReply={setReply}
+                refs={refs}
+
+                    textAreaRef={textAreaRef}
+                    reply={item.reply}
                     homeLander={true} 
                     fromName={item.name}
                     fromId={item.from_id}
@@ -49,14 +76,15 @@ function WallContainer() {
                     index={i}
                     dispatch={dispatch}
                     sent={item.updated}
-                />)
+                />
+            })
 
     return (
         <>
             {isAuthorized ?
                 <>
                     <UserProfileInfo />
-                    <Wall state={state} typeTextArea={typeTextArea} ownerId={ownerId} posts={posts} userId={userId} dispatch={dispatch} usersAPI={usersAPI}/>
+                    <Wall setReply={setReply} isReply={isReply} textAreaRef={textAreaRef} state={state} typeTextArea={typeTextArea} ownerId={ownerId} posts={posts} userId={userId} dispatch={dispatch} usersAPI={usersAPI}/>
 
                 </>
                 :

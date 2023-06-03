@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import UserProfilePage from './UserProfilePage';
 import { useParams } from 'react-router-dom';
@@ -67,21 +67,50 @@ function UserProfilePageContainer() {
         setModalData(data => data = {id, name, photo})
     }
 
-    const posts = wallReducerState.userPosts.map((item, i) =>
-        <Post
-            homeLander={false}
-            fromName={item.name}
-            fromId={item.from_id}
-            ownerId={ownerId}
-            message={wallReducerState.textAreaState}
-            postId={item.id}
-            key={i}
-            likes={item.likes}
-            text={item.message}
-            index={i}
-            dispatch={dispatch}
-            sent={item.updated}
-        />)
+    const textAreaRef = useRef();
+    const [isReply, setReply] = useState([null, null]);
+
+    let refs = {};
+
+    const posts = wallReducerState.userPosts.map((item, i) => {
+
+
+        Object.defineProperties(refs, {
+            [item.id]: {
+              value: {
+                current: null,
+                text: item.message,
+                from: item.name,
+                data: item.updated,
+              },
+            },
+          });
+
+return         <Post
+setReply={setReply}
+refs={refs}
+textAreaRef={textAreaRef}
+reply={item.reply}
+    homeLander={false}
+    fromName={item.name}
+    fromId={item.from_id}
+    ownerId={ownerId}
+    message={wallReducerState.textAreaState}
+    postId={item.id}
+    key={i}
+    likes={item.likes}
+    text={item.message}
+    index={i}
+    dispatch={dispatch}
+    sent={item.updated}
+/>
+
+    }
+
+    
+
+
+        )
 
     return (
         <>
@@ -89,7 +118,7 @@ function UserProfilePageContainer() {
         <ModalNewMessage isActive={isModalActive} modalData={modalData} setModalActive={setModalActive} />
 
             <UserProfilePage setActive={sendMessageModalHandler} ownerId={+ownerId} userId={+param.userId} followUser={followUser} unfollowUser={unfollowUser} isFriend={followed} status={userProfileData.status}  profilePic={userProfileData.profilePic} photo={userProfileData.photo} fullName={userProfileData.fullName} contacts={{ facebook: 'fb' }} aboutMe={userProfileData.info} />
-            <Wall typeTextArea={typeTextArea} ownerId={ownerId} userId={param.userId} posts={posts} dispatch={dispatch} usersAPI={usersAPI} state={wallReducerState} />
+            <Wall setReply={setReply} isReply={isReply} textAreaRef={textAreaRef} typeTextArea={typeTextArea} ownerId={ownerId} userId={param.userId} posts={posts} dispatch={dispatch} usersAPI={usersAPI} state={wallReducerState} />
         </>
     )
 }
