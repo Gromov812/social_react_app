@@ -63,7 +63,7 @@ useEffect(() => {
   return (
     <>
       <div className={pw.post} id={props.postId} ref={props.refs[props.postId]['current']}>
-        <div className={pw.post__buttons_block}>
+        
         <p className={pw.name}> 
           <Link className={pw.user_link} to={`/user/${props.fromId}`}>
             {props.fromName}
@@ -72,6 +72,27 @@ useEffect(() => {
             {' '}{dateDay} at {dateTime}
           </span>
         </p>
+        
+        {props.reply ?
+        <>
+        <span className={pw.reply__metadata}>{replyData.name} {replyData.data} at {replyData.time}</span>
+        <div className={pw.reply__block} onClick={scrollToPost} >
+            <div className={pw.reply__block_message}>{replyData.message || 'test reply msg'}</div>
+        </div> 
+        </>
+        : 
+        ''
+        }
+        <pre>{props.text}</pre>
+
+        <div className={pw.post__buttons_block}>
+        <LikeCounter
+          dispatch={props.dispatch}
+          likes={props.likes}
+          index={props.index}
+          postId={props.postId}
+          ownerId={props.ownerId}
+        />
         {props.homeLander ? (
           props.fromId == props.ownerId ? (
             <div>
@@ -98,24 +119,6 @@ useEffect(() => {
       
 
         </div>
-        {props.reply ?
-        <>
-        <span className={pw.reply__metadata}>{replyData.name} {replyData.data} at {replyData.time}</span>
-        <div className={pw.reply__block} onClick={scrollToPost} >
-            <div className={pw.reply__block_message}>{replyData.message || 'test reply msg'}</div>
-        </div> 
-        </>
-        : 
-        ''
-        }
-        <pre>{props.text}</pre>
-        <LikeCounter
-          dispatch={props.dispatch}
-          likes={props.likes}
-          index={props.index}
-          postId={props.postId}
-          ownerId={props.ownerId}
-        />
       </div>
     </>
   );
