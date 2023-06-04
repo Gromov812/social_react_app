@@ -57,12 +57,13 @@
   }
   .dialogContainer {
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: column-reverse nowrap;
     flex: 0 0 85%;
     padding: 0 0 0 30px;
     height: 80vh;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
+    gap: 5px 0;
   }
   .dialogContainer::-webkit-scrollbar {
     width: 2px;
@@ -128,7 +129,12 @@
     transition: 0.2s linear;
     outline: none;
 }
-
+.contact__element > a {
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 700;
+  color: #252525;
+}
 @media (max-width: 768px) {
   .container {
     flex-flow: column wrap;
@@ -137,6 +143,6 @@
     flex: 1;
   }
   .screen {
-    height: 100%;
+    height: 80vh;
   }
 }

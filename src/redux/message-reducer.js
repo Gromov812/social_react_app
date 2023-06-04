@@ -45,7 +45,7 @@ export const messageReducer = (state = _messageState, action) => {
             action.payload.forEach(el => {
                 let answer = el.from_id == ownerId ? true : false;
                 let time = 
-                contactsMsgPayload.push({text: el.message, name: el.name, sent: el.sent, answer: answer, conversation: answer ? el.contragent_id      : el.from_id})
+                contactsMsgPayload.push({text: el.message, name: el.name, sent: el.sent, answer: answer, conversation: answer ? el.contragent_id: el.from_id})
             })
 
             console.log(contactsMsgPayload);
@@ -56,15 +56,10 @@ export const messageReducer = (state = _messageState, action) => {
         }
 
         case SET_CONTACTS : {
-            let contactsDataPayload = [];
-            console.log(action.arr);
-            action.arr.forEach(el => {
+            let contactsDataPayload = action.arr.map(el => {
                 
-                contactsDataPayload.push({id: el.contragent_id, name: el.name, unreadCounter:el.unread_counter, currentMessageText:''})
+               return {id: el.contragent_id, name: el.name, unreadCounter:el.unread_counter, photo: el.photo, currentMessageText:''}
             })
-              
-            console.log(`contactsDataPayload >> `, contactsDataPayload);
-
             return {
                 ...state,
                 contactsData: [...contactsDataPayload]

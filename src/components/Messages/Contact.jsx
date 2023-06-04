@@ -1,30 +1,49 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
+import { Avatar } from "@mui/material";
 import m from './Messages.module.css';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Badge from '@mui/material/Badge';
+
+
 
 
 const Contact = (props) => {
-    let { id, name, unreadCounter, dialogRef } = props;
-
+    let { id, name, unreadCounter, dialogRef, avatar, selectedIndex, setSelectedIndex } = props;
+    const clickLinkHandler = () => {
+        setSelectedIndex(id);
+        dialogRef.current.scrollIntoView({ block: 'end', behavior: 'smooth' })
+    } 
 
     const setClass = ({ isActive }) => isActive ? `${m.active} ${m.item}` : m.item;
 
-    return <>
-
+    return <div className={m.contact__element}>
+        <NavLink to={`/messages/${id}`}>
+  <ListItemButton selected={selectedIndex == id} onClick={clickLinkHandler}>
+    <ListItemIcon>
+    <Badge variant="dot"  overlap="circular" color="primary">
+    <Avatar src={avatar} />
+    </Badge>
+    </ListItemIcon>
+    <ListItemText primary={name} />
+  </ListItemButton >
+</NavLink>
+    {/* <Avatar src={avatar} />
         <NavLink
-            onClick={() => {
-            console.log(dialogRef.current)
-            dialogRef.current.scrollIntoView({ block: 'end', behavior: 'smooth' })}
-                
-            } 
+            onClick={clickLinkHandler} 
             key={id}
             to={`/messages/${id}`}
             className={setClass}>
             {name}
             {unreadCounter > 0 && <span className={m.unreadMessages}>{unreadCounter}</span>}
-        </NavLink>
+        </NavLink> */}
 
-    </>
+        </div>
 }
 
 export default Contact;
+
+
+

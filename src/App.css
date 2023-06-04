@@ -23,8 +23,9 @@ height: 100%;
   display: flex;
   flex-flow: column nowrap;
   height: 100%;
-  flex: 0 0 85%;
-  padding: 5px 0 0 5px
+  flex: 0 0 65%;
+  padding: 5px 0 0 5px;
+  font-size: .9rem;
 }
 
 @media (max-width: 768px) {

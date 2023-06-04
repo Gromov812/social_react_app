@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import m from './Messages.module.css';
 import Msg from "./Msg";
 import ScrollToBottom from 'react-scroll-to-bottom';
 import { sendMessage, setConversationId, typeOnPrimaryMsgTextArea } from "../../redux/message-reducer";
 import { useSelector } from "react-redux";
-import axios from "axios";
 import { usersAPI } from "../../DAL/api";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
@@ -62,11 +61,15 @@ const DialogWindow = ({ state, dispatch, dialogRef }) => {
         </>
     }
 
+        let ref = useRef();
 
     let messages = Object.assign([], state.contactsMsg)
         .filter(el => el.conversation == state.activeDialogId)
-        .map((el,i) => {
+        .reverse()
+        .map((el,i, arr) => {
+
             return <Msg
+            
                 key={i}
                 text={el.text}
                 conversation={el.conversation}
@@ -80,9 +83,9 @@ const DialogWindow = ({ state, dispatch, dialogRef }) => {
     return <>
         <div className={m.screen}>
 
-            <ScrollToBottom className={m.dialogContainer}>
+            <div className={m.dialogContainer}>
                 {messages}
-            </ScrollToBottom>
+            </div>
 
             <div className={m.area}  >
                 {displayFirstScreen()}

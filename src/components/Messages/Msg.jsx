@@ -6,7 +6,7 @@ const Msg = (props) => {
 
    
     let time = new Date(+sent);
-    sent = time.toLocaleTimeString();
+    sent = time.toLocaleString();
 
 
     const displayMessage = () => {
@@ -14,10 +14,9 @@ const Msg = (props) => {
             return <>
                 <div className={`${m.content} ${m.answer}`}>
                     <div className={m.person}>
-                        <div className={m.ava}><img src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/male3-32.png" alt="" /></div>
-                        <div className={m.name}>Me</div>
+                        <div className={m.name}>Me: <span style={{fontWeight:'300'}}>{sent}</span></div>
                     </div>
-                    <div className={m.message}><span>{sent}</span>{text}</div>
+                    <div className={m.message}>{text}</div>
                 </div>
             </>
         }
@@ -25,20 +24,19 @@ const Msg = (props) => {
             return <>
                 <div className={m.content}>
                     <div className={m.person}>
-                        <div className={m.ava}><img src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/male3-32.png" alt="" /></div>
-                        <div className={m.name}>{name}</div>
+                        <div className={m.name}>{name}: <span style={{fontWeight:'300'}}>{sent}</span></div>
                     </div>
-                    <div className={m.message}><span>{sent}</span>{text}</div>
+                    <div className={m.message}>{text}</div>
                 </div>
             </>
         }
     }
 
-    return <>
-
+    return <div >
+            
         {displayMessage()}
 
-    </>
+    </div>
 }
 
 export default Msg;
