@@ -1,9 +1,10 @@
-import { SET_USER_MESSAGES, SET_TO_NULL_UNREAD_COUNTER, SET_CONTACTS, SEND_MESSAGE, SET_CONVERSATION_ID, TYPE_ON_PRIMARY_MESSAGE_TEXTAREA } from "./actionTypes";
+import { SET_UNREAD_COUNTER, SET_USER_MESSAGES, SET_TO_NULL_UNREAD_COUNTER, SET_CONTACTS, SEND_MESSAGE, SET_CONVERSATION_ID, TYPE_ON_PRIMARY_MESSAGE_TEXTAREA } from "./actionTypes";
 
 
 let _messageState = {
     activeDialogId: 0,
     currentConversationIndex: 0,
+    currentUnreadCounter: 0,
     contactsMsg: [ 
         { sent: 1672259715420, conversation: 1, text: 'Hello, how are u?', name: 'Alex', answer: true },
         { sent: 1672259725420, conversation: 1, text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores quidem facilis facere laboriosam, minima ullam excepturi, esse eligendi quasi debitis ab iure aperiam quisquam amet iusto animi pariatur a consectetur.', name: 'Nikita' },
@@ -23,11 +24,11 @@ let _messageState = {
         { conversation: 4, text: 'Do you like my new IPhone 3Gs?', name: 'Steve Jobs', sent: 1672259755420 },
     ],
     contactsData: [
-        { id: 1, name: 'Nikita', unreadCounter: 0, currentMessageText: '', currentMsgCount:0 },
-        { id: 2, name: 'Anthony', unreadCounter: 0, currentMessageText: '', currentMsgCount:0 },
-        { id: 3, name: 'John Deer', unreadCounter: 0, currentMessageText: '', currentMsgCount:0 },
-        { id: 4, name: 'Steve Jobs', unreadCounter: 0, currentMessageText: '', currentMsgCount:0 },
-        { id: 5, name: 'Luke Skywalker', unreadCounter: 0, currentMessageText: '', currentMsgCount:0 },
+        // { id: 1, name: 'Nikita', unreadCounter: 0, currentMessageText: '', currentMsgCount:0 },
+        // { id: 2, name: 'Anthony', unreadCounter: 0, currentMessageText: '', currentMsgCount:0 },
+        // { id: 3, name: 'John Deer', unreadCounter: 0, currentMessageText: '', currentMsgCount:0 },
+        // { id: 4, name: 'Steve Jobs', unreadCounter: 0, currentMessageText: '', currentMsgCount:0 },
+        // { id: 5, name: 'Luke Skywalker', unreadCounter: 0, currentMessageText: '', currentMsgCount:0 },
     ]
 }
 
@@ -47,7 +48,6 @@ export const messageReducer = (state = _messageState, action) => {
                 let time = 
                 contactsMsgPayload.push({text: el.message, name: el.name, sent: el.sent, answer: answer, conversation: answer ? el.contragent_id: el.from_id})
             })
-
             console.log(contactsMsgPayload);
             return {
                 ...state,
@@ -58,7 +58,7 @@ export const messageReducer = (state = _messageState, action) => {
         case SET_CONTACTS : {
             let contactsDataPayload = action.arr.map(el => {
                 
-               return {id: el.contragent_id, name: el.name, unreadCounter:el.unread_counter, photo: el.photo, currentMessageText:''}
+               return {id: el.contragent_id, name: el.name, /*unreadCounter: el.unread_counter,*/ photo: el.photo, currentMessageText:''}
             })
             return {
                 ...state,
@@ -94,16 +94,40 @@ export const messageReducer = (state = _messageState, action) => {
         }
     }
 
+        case SET_UNREAD_COUNTER : {
+
+            let contactsDataCopy = state.contactsData.slice();
+
+            contactsDataCopy = contactsDataCopy.map(el => {
+                if (el.id == action.id) el.unreadCounter = action.count;
+                return el;
+            })
+            let allUnread = contactsDataCopy.reduce((acc, cur) => {
+                return acc += cur.unreadCounter;
+            },0)
+            return {
+                
+                ...state,
+                currentUnreadCounter: allUnread,
+                contactsData: contactsDataCopy
+            }
+        }
+
         case SET_TO_NULL_UNREAD_COUNTER: {
             let contactsDataCopy = state.contactsData.slice();
+            let userCounter = 0;
             contactsDataCopy = contactsDataCopy.map(el => {
-                if (el.id == action.userId) el.unreadCounter = 0;
+                if (el.id == action.userId) {
+                    userCounter = el.unreadCounter;
+                    el.unreadCounter = 0;
+                }
                 return el;
             })
             
 
             return {
                 ...state,
+                currentUnreadCounter: state.currentUnreadCounter - userCounter,
                 contactsData: contactsDataCopy
             }
         }

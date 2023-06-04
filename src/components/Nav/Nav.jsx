@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import n from './Nav.module.css';
 import { NavLink, useLocation } from "react-router-dom";
-import { connect, useSelector } from 'react-redux'
+import { connect, useDispatch, useSelector } from 'react-redux'
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import List from '@mui/material/List';
@@ -12,24 +12,51 @@ import DnsIcon from '@mui/icons-material/Dns';
 import GroupIcon from '@mui/icons-material/Group';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import SettingsIcon from '@mui/icons-material/Settings';
+import Badge from '@mui/material/Badge';
+
+import { usersAPI } from '../../DAL/api';
 
 
 const Nav = ({ isOpenMenu, setIsOpenMenu}) => {
 
   let isAuthorized = useSelector(state => state.authReducer.authorized)
-
+  let ownerId = useSelector(state => state.authReducer.id);
+  const messageContactsData = useSelector(state => state.messageReducer.contactsData);
+  const dispatch = useDispatch();
   let state = useSelector(state => state.messageReducer)
   let location = useLocation().pathname;
   const [selectedIndex, setSelectedIndex] = useState(`${location}`);
 
 
-  let unreadMessages = state.contactsData
-    .map((item) => item.unreadCounter);
-  unreadMessages = unreadMessages.reduce((acc, cur) => acc + cur);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setSelectedIndex(`${location}`);
-  }, [location])
+
+
+    (async function () {
+      await usersAPI.getDialogContacts(ownerId)
+      .then(res => { 
+          if (res.data !== 'Empty array') {
+          let arr = [...res.data];
+           arr.map(el => {
+              if (el.contragent_id == ownerId) el.contragent_id = el.from_id;
+              return el;
+          });
+          dispatch({type:'SET_CONTACTS', arr: arr })
+      }
+      })
+
+      await         messageContactsData.forEach(async el => {
+        await usersAPI.getDialogContactsUnreads(ownerId, el.id)
+        .then(res => {
+            // console.log(res);
+            dispatch({type:'SET_UNREAD_COUNTER', id: el.id, count: res.data.length == 0 ? 0 : res.data[0].unread_counter})
+
+        })
+    })
+    })()
+
+  }, [location,messageContactsData.length])
 
   const setActive = ({ isActive }) => isActive ? `${n.active} ${n.item}` : n.item;
 
@@ -62,7 +89,7 @@ const Nav = ({ isOpenMenu, setIsOpenMenu}) => {
                 <ListItemIcon>
                     <MessageIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Messages" />
+                  <ListItemText primary="Messages" /> <Badge badgeContent={state.currentUnreadCounter} color="primary" />
                 </ListItemButton>
               </NavLink>
               <NavLink to="/users_list">

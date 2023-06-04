@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Auth from './Login';
 import Logout from './Logout';
@@ -7,7 +7,7 @@ import Cookies from 'universal-cookie';
 
 import { isExpired, decodeToken } from "react-jwt";
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+
 
 function AuthContainer() {
 
@@ -24,7 +24,7 @@ function AuthContainer() {
     let ownerId = useSelector(state => state.authReducer.id);
     const navigate = useNavigate();
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         
         if (!isExpired(token)) {
             console.log(`not expired`);
@@ -39,7 +39,7 @@ function AuthContainer() {
 
                     console.log(`refresh token >>`, res.data.token)
                     cookies.remove('cookie localhost');
-                    cookies.set('cookie localhost', res.data.token, {})
+                    cookies.set('cookie localhost', res.data.token, {path:'/'})
                 })
         }
         else {

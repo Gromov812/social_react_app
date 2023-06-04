@@ -1,8 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import m from './Messages.module.css';
 import Msg from "./Msg";
-import ScrollToBottom from 'react-scroll-to-bottom';
 import { sendMessage, setConversationId, typeOnPrimaryMsgTextArea } from "../../redux/message-reducer";
 import { useSelector } from "react-redux";
 import { usersAPI } from "../../DAL/api";
@@ -25,12 +24,16 @@ const DialogWindow = ({ state, dispatch, dialogRef }) => {
         }
     }
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (params['*']) {
 
             usersAPI.getDialogMessages(ownerId, params['*']).then(res => {
                 console.log(`dialogs >>> `, res);
                 dispatch({type:'SET_USER_MESSAGES', payload: res.data, ownerId})
+                return res.data
+            })
+            .then(res => {
+                console.log(res);
             })
         }
         console.log(params['*']);

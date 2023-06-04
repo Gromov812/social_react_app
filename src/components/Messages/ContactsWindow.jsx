@@ -8,29 +8,40 @@ import List from '@mui/material/List';
 
 const ContactsWindow = ({dialogRef, state, dispatch}) => {
     const ownerId = useSelector(state => state.authReducer.id);
+    const messageContactsData = useSelector(state => state.messageReducer.contactsData);
     const [selectedIndex, setSelectedIndex] = useState(false);
 
     useEffect(() => {
-        console.log(selectedIndex);
-        usersAPI.getDialogContacts(ownerId)
-        .then(res => { 
-            console.log(`CONT WIND`, res);
-            if (res.data !== 'Empty array') {
-            let arr = [...res.data];
-            arr.map(el => {
-                if (el.contragent_id == ownerId) el.contragent_id = el.from_id;
-                
-                return el;
-            });
-            
-            dispatch({type:'SET_CONTACTS', arr: arr })
-        }
-        })
+        // usersAPI.getDialogContacts(ownerId)
+        // .then(async res => { 
+        //     if (res.data !== 'Empty array') {
+        //     let arr = [...res.data];
+        //     await arr.map(el => {
+        //         if (el.contragent_id == ownerId) el.contragent_id = el.from_id;
+        //         return el;
+        //     });
+        //     dispatch({type:'SET_CONTACTS', arr: arr })
+        // }
+        // })
+        // .then(() => {
+        //     console.log(messageContactsData);
+        //     messageContactsData.forEach(async el => {
+        //         await usersAPI.getDialogContactsUnreads(ownerId, el.id)
+        //         .then(res => {
+        //             console.log(res);
+        //             dispatch({type:'SET_UNREAD_COUNTER', id: el.id, count: res.data.length == 0 ? 0 : res.data[0].unread_counter})
+        
+        //         })
+        //     })
 
-    }, [ownerId])
+        // })
+
+
+    }, [ownerId, selectedIndex, messageContactsData.length])
     let contacts = state.contactsData
-        .map((item,i) =>
-            <Contact
+        .map((item,i) => {
+           return <Contact
+            ownerId={ownerId}
             selectedIndex={selectedIndex}
              setSelectedIndex={setSelectedIndex}
                 avatar={item.photo}
@@ -41,7 +52,7 @@ const ContactsWindow = ({dialogRef, state, dispatch}) => {
                 name={item.name}
                 unreadCounter={item.unreadCounter}
             />
-        );
+});
     return <>
         <div className={m.contacts}>
             <ul className={m.items_list}>

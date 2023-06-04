@@ -1,9 +1,9 @@
 import axios from 'axios';
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { usersAPI } from '../../DAL/api';
 import Register from './Register';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Cookies from 'universal-cookie';
 
@@ -11,8 +11,12 @@ function RegisterContainer() {
 
     const cookies = new Cookies();
     let dispatch = useDispatch();
-
+    let isAuthorized = useSelector(state => state.authReducer.authorized);
     const navigate = useNavigate();
+
+    useLayoutEffect(() => {
+        if (isAuthorized)  navigate('/', { replace: true });
+    },[isAuthorized])
 
     function registerUser(login, pass, email) {
 

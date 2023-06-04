@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import m from './Messages.module.css';
@@ -6,12 +6,19 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Badge from '@mui/material/Badge';
+import { usersAPI } from "../../DAL/api";
 
 
 
 
 const Contact = (props) => {
-    let { id, name, unreadCounter, dialogRef, avatar, selectedIndex, setSelectedIndex } = props;
+    let { id, name, dialogRef, avatar, selectedIndex, setSelectedIndex, ownerId, dispatch, unreadCounter } = props;
+
+
+
+    useLayoutEffect(() => {
+
+    },[ownerId])
 
     // console.log(name, ` - `, unreadCounter);
     const clickLinkHandler = () => {
@@ -25,7 +32,7 @@ const Contact = (props) => {
         <NavLink to={`/messages/${id}`}>
   <ListItemButton selected={selectedIndex == id} onClick={clickLinkHandler}>
     <ListItemIcon>
-    {unreadCounter > 0 ? <Badge variant="dot" overlap="circular" color="primary">
+    {unreadCounter > 0 ? <Badge  badgeContent={unreadCounter} overlap="circular" color="primary">
     <Avatar src={avatar} />
     </Badge> :
      <Avatar src={avatar} />}
