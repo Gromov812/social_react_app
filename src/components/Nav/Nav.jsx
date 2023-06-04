@@ -20,9 +20,6 @@ import { usersAPI } from '../../DAL/api';
 const Nav = ({ isOpenMenu, setIsOpenMenu}) => {
 
   let isAuthorized = useSelector(state => state.authReducer.authorized)
-  let ownerId = useSelector(state => state.authReducer.id);
-  const messageContactsData = useSelector(state => state.messageReducer.contactsData);
-  const dispatch = useDispatch();
   let state = useSelector(state => state.messageReducer)
   let location = useLocation().pathname;
   const [selectedIndex, setSelectedIndex] = useState(`${location}`);
@@ -33,30 +30,9 @@ const Nav = ({ isOpenMenu, setIsOpenMenu}) => {
     setSelectedIndex(`${location}`);
 
 
-    (async function () {
-      await usersAPI.getDialogContacts(ownerId)
-      .then(res => { 
-          if (res.data !== 'Empty array') {
-          let arr = [...res.data];
-           arr.map(el => {
-              if (el.contragent_id == ownerId) el.contragent_id = el.from_id;
-              return el;
-          });
-          dispatch({type:'SET_CONTACTS', arr: arr })
-      }
-      })
+    
 
-      await         messageContactsData.forEach(async el => {
-        await usersAPI.getDialogContactsUnreads(ownerId, el.id)
-        .then(res => {
-            // console.log(res);
-            dispatch({type:'SET_UNREAD_COUNTER', id: el.id, count: res.data.length == 0 ? 0 : res.data[0].unread_counter})
-
-        })
-    })
-    })()
-
-  }, [location,messageContactsData.length])
+  }, [location])
 
   const setActive = ({ isActive }) => isActive ? `${n.active} ${n.item}` : n.item;
 
