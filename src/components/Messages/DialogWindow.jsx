@@ -25,8 +25,6 @@ const DialogWindow = ({ state, dispatch, dialogRef }) => {
         }
     }
 
-
-
     useEffect(() => {
         if (params['*']) {
 
@@ -37,7 +35,8 @@ const DialogWindow = ({ state, dispatch, dialogRef }) => {
         }
         console.log(params['*']);
         dispatch(setConversationId(params['*']));
-        dispatch({ type: 'SET_TO_NULL_UNREAD_COUNTER', userId: params['*'] })
+        dispatch({ type: 'SET_TO_NULL_UNREAD_COUNTER', userId: params['*'] });
+        console.log(`RERENDER DW`);
 
     }, [params['*'], msgStateLength])
 

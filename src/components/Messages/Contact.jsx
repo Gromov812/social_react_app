@@ -12,6 +12,8 @@ import Badge from '@mui/material/Badge';
 
 const Contact = (props) => {
     let { id, name, unreadCounter, dialogRef, avatar, selectedIndex, setSelectedIndex } = props;
+
+    // console.log(name, ` - `, unreadCounter);
     const clickLinkHandler = () => {
         setSelectedIndex(id);
         dialogRef.current.scrollIntoView({ block: 'end', behavior: 'smooth' })
@@ -23,9 +25,11 @@ const Contact = (props) => {
         <NavLink to={`/messages/${id}`}>
   <ListItemButton selected={selectedIndex == id} onClick={clickLinkHandler}>
     <ListItemIcon>
-    <Badge variant="dot"  overlap="circular" color="primary">
+    {unreadCounter > 0 ? <Badge variant="dot" overlap="circular" color="primary">
     <Avatar src={avatar} />
-    </Badge>
+    </Badge> :
+     <Avatar src={avatar} />}
+
     </ListItemIcon>
     <ListItemText primary={name} />
   </ListItemButton >

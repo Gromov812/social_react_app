@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 import ContactsWindow from "./ContactsWindow";
 import DialogWindow from "./DialogWindow";
 import m from './Messages.module.css';
@@ -15,7 +15,7 @@ const dialogRef = useRef();
 
 
 
-useEffect(() => {
+useLayoutEffect(() => {
     if (!isAuthorized) {
         navigate('/', {replace: true});
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import UserProfileBlock from "../Users/User-profile-block";
 import Cookies from "universal-cookie";
@@ -24,7 +24,7 @@ function UserFriendsListContainer() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     console.log(`rerender`);
     if (!isExpired(token)) {
       id = decodeToken(token).id;

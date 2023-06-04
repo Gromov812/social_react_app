@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
@@ -30,7 +30,7 @@ export default function ProfileSettingsContainer(props) {
     setSuccess(false);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!isAuthorized) {
       navigate("/", { replace: true });
     }
