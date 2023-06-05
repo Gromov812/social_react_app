@@ -50,7 +50,8 @@ const Header = ({ setIsOpenMenu, isOpenMenu}) => {
 
     const StyledBadge = styled(Badge)(({ theme }) => ({
       '& .MuiBadge-badge': {
-        animation: `1s ease-in infinite blinker`
+        padding: `5px`,
+        animation: `1.8s ease-in infinite blinker`
       },
       '@keyframes blinker': {
         '0%': { opacity: 0 },
