@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { Suspense, useEffect, useLayoutEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Auth from './Login';
 import Logout from './Logout';
@@ -78,12 +78,16 @@ function AuthContainer() {
     return (
 
         <>
-
-            {isAuthorized ?
+   
+            {isAuthorized == null ?
+            ''
+            :
+            isAuthorized ?
                 <Logout logout={logoutMe} name={state.userData.name} />
                 :
                 <Auth errorMessage={state.errorMessage} state={state} setLogin={setLogin} setPass={setPassword} login={login} pass={password} authorizeMe={authorizeMe} />
             }
+          
         </>
     )
 }
