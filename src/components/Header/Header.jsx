@@ -9,12 +9,15 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useDispatch, useSelector } from 'react-redux';
 import { usersAPI } from '../../DAL/api';
+import Badge from "@mui/material/Badge";
+import { styled } from '@mui/material/styles';
+
 
 const Header = ({ setIsOpenMenu, isOpenMenu}) => {
 
   const isAuthorized = useSelector(state => state.authReducer.authorized);
   let ownerId = useSelector(state => state.authReducer.id);
-  const messageContactsData = useSelector(state => state.messageReducer.contactsData);
+  const state = useSelector(state => state.messageReducer);
   const dispatch = useDispatch();
 
 
@@ -33,7 +36,7 @@ const Header = ({ setIsOpenMenu, isOpenMenu}) => {
         }
         })
   
-        await messageContactsData.forEach(async el => {
+        await state.contactsData.forEach(async el => {
           await usersAPI.getDialogContactsUnreads(ownerId, el.id)
           .then(res => {
               dispatch({type:'SET_UNREAD_COUNTER', id: el.id, count: res.data.length == 0 ? 0 : res.data[0].unread_counter})
@@ -43,8 +46,18 @@ const Header = ({ setIsOpenMenu, isOpenMenu}) => {
       
       })()
     }
-    },[messageContactsData.length, ownerId])
+    },[state.contactsData.length, ownerId])
 
+    const StyledBadge = styled(Badge)(({ theme }) => ({
+      '& .MuiBadge-badge': {
+        animation: `1s ease-in infinite blinker`
+      },
+      '@keyframes blinker': {
+        '0%': { opacity: 0 },
+        '50%': { opacity: 1 },
+        '100%': { opacity: 0 },
+    },
+    }));
 
     return (<>
   
@@ -79,7 +92,12 @@ const Header = ({ setIsOpenMenu, isOpenMenu}) => {
             sx={{ mr: 2 }}
           onClick={() => setIsOpenMenu(!isOpenMenu)}
           >
-            <MenuIcon />
+          {state.currentUnreadCounter > 0 ? 
+          <StyledBadge color="secondary" variant="dot" overlap="circular" ><MenuIcon /></StyledBadge>
+            :
+          <MenuIcon />
+        }
+
           </IconButton>
           </div>
         }
