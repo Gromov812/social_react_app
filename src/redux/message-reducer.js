@@ -24,11 +24,8 @@ let _messageState = {
         { conversation: 4, text: 'Do you like my new IPhone 3Gs?', name: 'Steve Jobs', sent: 1672259755420 },
     ],
     contactsData: [
-        // { id: 1, name: 'Nikita', unreadCounter: 0, currentMessageText: '', currentMsgCount:0 },
-        // { id: 2, name: 'Anthony', unreadCounter: 0, currentMessageText: '', currentMsgCount:0 },
-        // { id: 3, name: 'John Deer', unreadCounter: 0, currentMessageText: '', currentMsgCount:0 },
-        // { id: 4, name: 'Steve Jobs', unreadCounter: 0, currentMessageText: '', currentMsgCount:0 },
-        // { id: 5, name: 'Luke Skywalker', unreadCounter: 0, currentMessageText: '', currentMsgCount:0 },
+        { id: 1, name: '', unreadCounter: 0, currentMessageText: '', currentMsgCount:0 },
+
     ]
 }
 
