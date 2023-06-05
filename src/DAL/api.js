@@ -170,7 +170,6 @@ export const usersAPI = {
         return axios.get(`http://193.168.46.22:3005/messages/contacts?ownerId=${ownerId}`)
     },
     getDialogContactsUnreads: (ownerId, contragentId) => {
-        console.log(`DAL API >> unreads`, ownerId, contragentId);
         return axios.get(`http://193.168.46.22:3005/messages/unreads?ownerId=${ownerId}&contragentId=${contragentId}`)
     },
     getDialogMessages: (ownerId, userId) => {

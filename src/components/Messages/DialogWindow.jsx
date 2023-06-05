@@ -12,7 +12,6 @@ import SendIcon from '@mui/icons-material/Send';
 const DialogWindow = ({ state, dispatch, dialogRef }) => {
 
     let ownerId = useSelector(state => state.authReducer.id);
-    let msgStateLength = useSelector(state => state.messageReducer.contactsMsg.length);
     let params = useParams();
 
     const sendMsg = (ownerId, to_id) => {
@@ -26,7 +25,7 @@ const DialogWindow = ({ state, dispatch, dialogRef }) => {
 
     useLayoutEffect(() => {
         if (params['*']) {
-
+            console.log(ownerId);
             usersAPI.getDialogMessages(ownerId, params['*']).then(res => {
                 console.log(`dialogs >>> `, res);
                 dispatch({type:'SET_USER_MESSAGES', payload: res.data, ownerId})
@@ -41,14 +40,13 @@ const DialogWindow = ({ state, dispatch, dialogRef }) => {
         dispatch({ type: 'SET_TO_NULL_UNREAD_COUNTER', userId: params['*'] });
         console.log(`RERENDER DW`);
 
-    }, [params['*'], msgStateLength])
+    }, [params['*'], ownerId])
 
 
     function displayFirstScreen() {
         if (params['*']) {
             return <>
                 <textarea placeholder="Type your message here..." onChange={(e) => dispatch(typeOnPrimaryMsgTextArea(e.target.value))} value={state.contactsData[state.currentConversationIndex].currentMessageText} onKeyDown={(e) => (e.key === 'Enter' && e.ctrlKey) ? sendMsg(ownerId, params['*']) : ''} />
-                {/* <button className={m.button} onClick={() => sendMsg(ownerId, params['*'])}>Send</button> */}
                 <Button sx={{height: '100%', margin: '0 5px', 'border-color': '#c9c9c9', color: '#242424'}} variant="outlined" onClick={() => sendMsg(ownerId, params['*'])} endIcon={<SendIcon />}>
         Send
       </Button>

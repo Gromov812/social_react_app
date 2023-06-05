@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { usersAPI } from '../../DAL/api';
 import Badge from "@mui/material/Badge";
 import { styled } from '@mui/material/styles';
+import axios from 'axios';
 
 
 const Header = ({ setIsOpenMenu, isOpenMenu}) => {
@@ -22,6 +23,13 @@ const Header = ({ setIsOpenMenu, isOpenMenu}) => {
 
 
     useLayoutEffect(() => {
+      axios.post('http://193.168.46.22:3005/balaboba', {
+            msg: 'Привет! Как у тебя дела??',
+        }).then(res => {
+          console.log(res);
+        })
+
+
       if (ownerId) {
       (async function () {
         await usersAPI.getDialogContacts(ownerId)
