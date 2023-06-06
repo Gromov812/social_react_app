@@ -133,7 +133,7 @@ export const messageReducer = (state = _messageState, action) => {
 
             console.log(action, state);
 
-            if (action.balaboba) {
+            if (action.balaboba_text) {
 
                 let newMessage = {
                     sent: new Date().getTime(),
@@ -179,8 +179,8 @@ export const messageReducer = (state = _messageState, action) => {
     }
 }
 
-export const sendMessage = (balaboba, balaboba_text) => {
-    return {type: SEND_MESSAGE, balaboba: balaboba, balaboba_text: balaboba_text}
+export const sendMessage = (balaboba_text) => {
+    return {type: SEND_MESSAGE, balaboba_text: balaboba_text}
 }
 export const setConversationId = (id) => {
     return {type: SET_CONVERSATION_ID, id: id}
