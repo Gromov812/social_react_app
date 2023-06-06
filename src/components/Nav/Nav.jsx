@@ -21,7 +21,10 @@ const Nav = ({ isOpenMenu, setIsOpenMenu }) => {
   let state = useSelector((state) => state.messageReducer);
   let location = useLocation().pathname;
   const [selectedIndex, setSelectedIndex] = useState(`${location}`);
+
+
   useLayoutEffect(() => {
+    console.log(location);
     setSelectedIndex(`${location}`);
   }, [location]);
 
