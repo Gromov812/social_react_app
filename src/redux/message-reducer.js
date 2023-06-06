@@ -140,7 +140,7 @@ export const messageReducer = (state = _messageState, action) => {
                     conversation: 102,
                     text:  action.balaboba_text,
                     name: 'BALABOBA BOT',
-                    answer: true
+                    answer: false
                 }
 
                 let newMessageToPush = [...state.contactsMsg];
