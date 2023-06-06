@@ -131,12 +131,31 @@ export const messageReducer = (state = _messageState, action) => {
 
         case SEND_MESSAGE : {
 
-            console.log(state);
+            console.log(action, state);
+
+            if (action.balaboba) {
+
+                let newMessage = {
+                    sent: new Date().getTime(),
+                    conversation: 102,
+                    text:  action.balaboba_text,
+                    name: 'BALABOBA BOT',
+                    answer: true
+                }
+
+                let newMessageToPush = [...state.contactsMsg];
+                newMessageToPush.push(newMessage);
+
+                return {
+                    ...state,
+                    contactsMsg: newMessageToPush,
+                }
+            }
 
             let newMessage = {
                 sent: new Date().getTime(),
                 conversation: state.contactsData[state.currentConversationIndex].id,
-                text: state.contactsData[state.currentConversationIndex].currentMessageText,
+                text:  state.contactsData[state.currentConversationIndex].currentMessageText,
                 name: state.contactsData[state.currentConversationIndex].name,
                 answer: true
             }
@@ -160,8 +179,8 @@ export const messageReducer = (state = _messageState, action) => {
     }
 }
 
-export const sendMessage = () => {
-    return {type: SEND_MESSAGE}
+export const sendMessage = (balaboba, balaboba_text) => {
+    return {type: SEND_MESSAGE, balaboba: balaboba, balaboba_text: balaboba_text}
 }
 export const setConversationId = (id) => {
     return {type: SET_CONVERSATION_ID, id: id}

@@ -7,10 +7,11 @@ import { useSelector } from "react-redux";
 import { usersAPI } from "../../DAL/api";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
+import Balaboba from 'balaboba-api/src/balaboba';
 
 
 const DialogWindow = ({ state, dispatch, dialogRef }) => {
-
+    const balaboba = new Balaboba()
     let ownerId = useSelector(state => state.authReducer.id);
     let params = useParams();
 
@@ -19,6 +20,14 @@ const DialogWindow = ({ state, dispatch, dialogRef }) => {
         console.log(msg);
         if (msg) {
             usersAPI.sendMsg(ownerId, to_id, msg).then(res => console.log(res))
+            if (to_id == 102 && ownerId != 102) {
+                balaboba.generate(`${msg}`, 8).then(result => {
+                    usersAPI.sendMsg(102, ownerId, result).then((res) => {
+                        dispatch(sendMessage(true, result))
+                    });
+                })
+                
+            }
             dispatch(sendMessage())
         }
     }

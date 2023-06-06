@@ -12,7 +12,6 @@ import { usersAPI } from '../../DAL/api';
 import Badge from "@mui/material/Badge";
 import { styled } from '@mui/material/styles';
 
-import Balaboba from 'balaboba-api/src/balaboba';
 
 
 const Header = ({ setIsOpenMenu, isOpenMenu}) => {
@@ -21,7 +20,7 @@ const Header = ({ setIsOpenMenu, isOpenMenu}) => {
   let ownerId = useSelector(state => state.authReducer.id);
   const state = useSelector(state => state.messageReducer);
   const dispatch = useDispatch();
-  const balaboba = new Balaboba();
+;
 
     useLayoutEffect(() => {
       // axios.post('http://193.168.46.22:3005/balaboba', {
@@ -31,7 +30,6 @@ const Header = ({ setIsOpenMenu, isOpenMenu}) => {
       //     console.log(res);
       //   })
 
-      balaboba.generate('Привет!!', 10).then(res => console.log(res))
 
       if (ownerId) {
       (async function () {
