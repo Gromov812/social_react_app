@@ -22,8 +22,16 @@ const DialogWindow = ({ state, dispatch, dialogRef }) => {
             usersAPI.sendMsg(ownerId, to_id, msg).then(res => console.log(res))
             if (to_id == 102 && ownerId != 102) {
                 balaboba.generate(`${msg}`, 8).then(result => {
-                    usersAPI.sendMsg(102, ownerId, result).then((res) => {
-                        dispatch(sendMessage(result))
+
+                    usersAPI.sendMsg(102, ownerId, result).then(() => {
+
+                        usersAPI.getDialogMessages(ownerId, params['*']).then(res => {
+                            dispatch({type:'SET_USER_MESSAGES', payload: res.data, ownerId})
+                        })
+
+                    })
+                    .then(() => {
+                        dispatch({ type: 'SET_TO_NULL_UNREAD_COUNTER', userId: params['*'] });
                     });
                 })
                 
