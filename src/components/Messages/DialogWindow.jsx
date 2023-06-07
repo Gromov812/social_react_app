@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef } from "react";
+import React, { useState, useLayoutEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import m from './Messages.module.css';
 import Msg from "./Msg";
@@ -9,13 +9,16 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import Balaboba from 'balaboba-api/src/balaboba';
 import { Configuration, OpenAIApi } from "openai";
+import axios from 'axios';
 
 const DialogWindow = ({ state, dispatch, dialogRef }) => {
+
+    const [openApiCtx, setOpenApiCtx] = useState([]);
     const balaboba = new Balaboba()
 
-    const openAIApiKey = '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';
+    const openAIApiKey = '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';
     const openAIConfiguration = new Configuration({
-  
+        
       apiKey: openAIApiKey,
   });
   const openai = new OpenAIApi(openAIConfiguration);
@@ -28,7 +31,6 @@ const DialogWindow = ({ state, dispatch, dialogRef }) => {
 
     const sendMsg = (ownerId, to_id) => {
         let msg = state.contactsData.filter(el => el.id == to_id)[0].currentMessageText;
-        console.log(msg);
         if (msg) {
             usersAPI.sendMsg(ownerId, to_id, msg).then(res => console.log(res))
             if (to_id == 102 && ownerId != 102) {
@@ -50,48 +52,87 @@ const DialogWindow = ({ state, dispatch, dialogRef }) => {
             if (to_id == 103 && ownerId != 103) {  
                 
 
-                openai.createCompletion({
-                    model: 'text-davinci-003',
-                    prompt: 'Тоже хорошо, чем занят?',
-                    max_tokens: 2048,
-                    temperature: 1,
-                  }).then((res) => {
+                                        // ADD OUR MSG TO CTX 
+                                        setOpenApiCtx((v) => {
+                                            return [
+                                                ...v, 
+                                                {role: 'user', content: msg}
+                                            ]
+                                        })
 
-                    usersAPI.sendMsg(103, ownerId, res.data.choices[0].text).then(() => {
+                openai.createChatCompletion({
+                    model: "gpt-3.5-turbo",
+                    messages: openApiCtx,
+                  }).then((res) => {
+                    usersAPI.sendMsg(103, ownerId, res.data.choices[0].message.content).then(() => {
+
+                        
+                                        // ADD GPT SYSTEM MSG TO CTX 
+                                        setOpenApiCtx((v) => {
+                                            return [
+                                                ...v, 
+                                                {role: 'system', content: res.data.choices[0].message.content}
+                                            ]
+                                        })
+
+
 
                         usersAPI.getDialogMessages(ownerId, params['*']).then(res => {
                             dispatch({type:'SET_USER_MESSAGES', payload: res.data, ownerId})
                         })
-
                     })
                     .then(() => {
                         dispatch({ type: 'SET_TO_NULL_UNREAD_COUNTER', userId: params['*'] });
                     });
                 })
-
-
-
             }
                 dispatch(sendMessage())
         }
+        console.log(openApiCtx);
     }
 
     useLayoutEffect(() => {
+        if (ownerId) {
+
+            if (params['*'] == 103 && openApiCtx.length == 0) {
+
+                axios.get(`http://193.168.46.22:3005/messages/openaicontext?ownerId=${ownerId}`).then(res => {
+
+                let arr = res.data.map(el => {
+                    if (el.sys == null) {
+                        el = {role: 'user', content: el.usr}
+                    }
+                    else {
+                        el = {role: 'system', content: el.sys}
+                    }
+                    return el;
+                })
+                    setOpenApiCtx((v) => {
+                        return [
+                            ...v, 
+                            ...arr
+                        ]
+                    })
+                })
+            }
+           
+
+
+    
+
+        }
+
         if (params['*']) {
             console.log(ownerId);
             usersAPI.getDialogMessages(ownerId, params['*']).then(res => {
-                console.log(`dialogs >>> `, res);
                 dispatch({type:'SET_USER_MESSAGES', payload: res.data, ownerId})
                 return res.data
             })
-            .then(res => {
-                console.log(res);
-            })
+
         }
-        console.log(params['*']);
+        // console.log(params['*']);
         dispatch(setConversationId(params['*']));
         dispatch({ type: 'SET_TO_NULL_UNREAD_COUNTER', userId: params['*'] });
-        console.log(`RERENDER DW`);
 
     }, [params['*'], ownerId])
 

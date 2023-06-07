@@ -7,7 +7,7 @@ import { usersAPI } from "../../DAL/api";
 const LikeCounter = (props) => {
     let [isLiked , setIsLiked] = useState();
     let likes = props.likes.length;
-console.log(props);
+
     useEffect(() => {
         setIsLiked (props.likes.includes(props.ownerId))
     }, [likes])
