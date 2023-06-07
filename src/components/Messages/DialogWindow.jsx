@@ -8,12 +8,23 @@ import { usersAPI } from "../../DAL/api";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import Balaboba from 'balaboba-api/src/balaboba';
-
+import { Configuration, OpenAIApi } from "openai";
 
 const DialogWindow = ({ state, dispatch, dialogRef }) => {
     const balaboba = new Balaboba()
+
+    const openAIApiKey = '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';
+    const openAIConfiguration = new Configuration({
+  
+      apiKey: openAIApiKey,
+  });
+  const openai = new OpenAIApi(openAIConfiguration);
+
+
     let ownerId = useSelector(state => state.authReducer.id);
     let params = useParams();
+
+
 
     const sendMsg = (ownerId, to_id) => {
         let msg = state.contactsData.filter(el => el.id == to_id)[0].currentMessageText;
@@ -36,7 +47,32 @@ const DialogWindow = ({ state, dispatch, dialogRef }) => {
                 })
                 
             }
-            dispatch(sendMessage())
+            if (to_id == 103 && ownerId != 103) {  
+                
+
+                openai.createCompletion({
+                    model: 'text-davinci-003',
+                    prompt: 'Тоже хорошо, чем занят?',
+                    max_tokens: 2048,
+                    temperature: 1,
+                  }).then((res) => {
+
+                    usersAPI.sendMsg(103, ownerId, res.data.choices[0].text).then(() => {
+
+                        usersAPI.getDialogMessages(ownerId, params['*']).then(res => {
+                            dispatch({type:'SET_USER_MESSAGES', payload: res.data, ownerId})
+                        })
+
+                    })
+                    .then(() => {
+                        dispatch({ type: 'SET_TO_NULL_UNREAD_COUNTER', userId: params['*'] });
+                    });
+                })
+
+
+
+            }
+                dispatch(sendMessage())
         }
     }
 
