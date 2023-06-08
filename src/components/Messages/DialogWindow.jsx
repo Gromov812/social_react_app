@@ -16,7 +16,7 @@ const DialogWindow = ({ state, dispatch, dialogRef }) => {
     const [openApiCtx, setOpenApiCtx] = useState([]);
     const balaboba = new Balaboba()
 
-    const openAIApiKey = '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';
+    const openAIApiKey = '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';
     const openAIConfiguration = new Configuration({
         
       apiKey: openAIApiKey,
@@ -54,15 +54,17 @@ const DialogWindow = ({ state, dispatch, dialogRef }) => {
 
                                         // ADD OUR MSG TO CTX 
                                         setOpenApiCtx((v) => {
-                                            return [
+                                            v = [
                                                 ...v, 
                                                 {role: 'user', content: msg}
-                                            ]
+                                            ];
+                                            return v;
                                         })
 
                 openai.createChatCompletion({
                     model: "gpt-3.5-turbo",
-                    messages: openApiCtx,
+                    messages: [...openApiCtx, {role: 'user', content: msg}],
+                    temperature: 1,
                   }).then((res) => {
                     usersAPI.sendMsg(103, ownerId, res.data.choices[0].message.content).then(() => {
 
@@ -71,7 +73,7 @@ const DialogWindow = ({ state, dispatch, dialogRef }) => {
                                         setOpenApiCtx((v) => {
                                             return [
                                                 ...v, 
-                                                {role: 'system', content: res.data.choices[0].message.content}
+                                                {role: 'assistant', content: res.data.choices[0].message.content}
                                             ]
                                         })
 
@@ -103,7 +105,7 @@ const DialogWindow = ({ state, dispatch, dialogRef }) => {
                         el = {role: 'user', content: el.usr}
                     }
                     else {
-                        el = {role: 'system', content: el.sys}
+                        el = {role: 'assistant', content: el.sys}
                     }
                     return el;
                 })

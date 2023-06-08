@@ -29,9 +29,9 @@ const Nav = ({ isOpenMenu, setIsOpenMenu }) => {
   }, [location]);
 
 
-  return (
-    <>
-      <nav className={n.nav}>
+  return <>
+    { isAuthorized && 
+        <nav className={n.nav}>
         <div
           className={
             isOpenMenu
@@ -39,15 +39,8 @@ const Nav = ({ isOpenMenu, setIsOpenMenu }) => {
               : `${n.item_list}`
           }
         > 
-          {isAuthorized ? (
-            <>
-              {/* <NavLink to="/" className = {setActive} >Posts Wall</NavLink>
-      <NavLink to="/messages" className = {setActive}>Messages {unreadMessages > 0 && <span className={n.unreadMessages}>{unreadMessages}</span>}</NavLink>
-      <NavLink to="/users_list" className = {setActive}>Users</NavLink> 
-      <NavLink to="/friends" className = {setActive}>Friends</NavLink> 
-      <NavLink to="/music" className = {setActive}>Music</NavLink>
-      <NavLink to="/settings" className = {setActive}>Settings</NavLink> */}
-
+        
+          
               <List>
                 <NavLink to="/">
                   <ListItemButton
@@ -109,14 +102,10 @@ const Nav = ({ isOpenMenu, setIsOpenMenu }) => {
                   </ListItemButton>
                 </NavLink>
               </List>
-            </>
-          ) : (
-            ""
-          )}
         </div>
       </nav>
-    </>
-  );
+    }
+    </>;
 };
 
 export default Nav;

@@ -140,7 +140,7 @@
     }
 
     .image {
-        max-width: 500px;
+        max-width: 200px;
         max-height: 750px;
         width: auto;
         height: 100%;
@@ -175,7 +175,22 @@
     background: #FFF;
     width: auto;
     padding: 0 10px;
-
+    }
+    .first__screen_list {
+        font-size: 0.8rem;
+        padding: 5px;
+    }
+    .first__screen_paragraph {
+        font-size: 1rem;
+        text-align: center;
+        line-height: 2rem;
+    }
+    .first__screen_paragraph_header {
+        font-size: 1.5rem;
+        color: #303030;
+    }
+    .first__screen_list > li {
+        padding: 5px 0;
     }
     @media (max-width: 768px) {
         .add_new_post__textarea {

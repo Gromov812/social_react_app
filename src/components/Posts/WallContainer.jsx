@@ -97,12 +97,19 @@ function WallContainer() {
         </>
       ) : isAuthorized == null ? null : (
         <div className={w.not__autorized_block}>
-          <img
-            className={w.image}
-            src={authorizedSamPicture}
-            alt="Unauthorized Sam"
-          />
-          <p>You are not authorized.</p>
+          <p className={w.first__screen_paragraph}>Hi! This is my pet-project. In this case, i've used React with Redux as Front-End and Express.js with MySQL DB as Back-End.</p>
+          <p className={w.first__screen_paragraph_header}>Main functionality:</p>
+            <ol className={w.first__screen_list}>
+              <li>Log-In / Sigh-In / Auth with JWT and cookie-sessions / refresh token when active</li>
+              <li>User profile / User settings / Avatars / Background Pics</li>
+              <li>All users list / friends list / ability to add-remove user as friend</li>
+              <li>User wall posts / posts likes / posts replyes / edit-delete funcs</li>
+              <li>Direct messages with users / unread notifications</li>
+              <li>Chat-GPT and Yandex Balaboba as companion in DM</li>
+            </ol>
+          
+
+          <p className={w.first__screen_paragraph_header}>Please!</p>
 
           <MuiAlert elevation={6} variant="filled" severity="info">
             Use Login: <b>Toby14</b> | Pass: <b>password123</b>
@@ -110,6 +117,11 @@ function WallContainer() {
           <p className={w.small_text}>
             or <Link to="/register">register</Link> new account
           </p>
+                    <img
+            className={w.image}
+            src={authorizedSamPicture}
+            alt="Unauthorized Sam"
+          />
         </div>
       )}
     </>
